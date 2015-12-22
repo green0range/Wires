@@ -1,0 +1,2 @@
+"ERR001: Map data is incomplete" - Some or all of the map requirements are missing or could not be read correctly. Check with the maps creator or redownload the map/map pack you are trying to play.
+"ERR002: File not found" - The game is unable to open a requested file. This could be a map, config, or save file. Check these all exist in the correct stucture, and are named correctly. Reinstall, see reinstall guide on how to do this without loosing progress.
