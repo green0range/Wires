@@ -18,7 +18,7 @@ class Terrain:
         screen_size = screen
         tile_w = screen[0]/tile[0]
         tile_h = screen[1]/tile[1]
-        objects.give_tile_data(tile_w, tile_h)
+        objects.give_tile_data(tile_w, tile_h, tile[0], tile[1])
         # Bulk imports
         import_list = [
             path.join("assets", "terrain", "wood_floor.jpg")
@@ -172,6 +172,8 @@ class MapImports:
                         if "_w" in obj_tmp_renderer:
                             self.background_imagery.blit(self.obj_render_images.wood_door_w, (self.x_counter, self.y_counter))
                 if "wall" in obj_tmp_renderer:
+                    self.background_imagery.blit(self.obj_render_images.wood_wall, (self.x_counter, self.y_counter))
+                if "wire" in obj_tmp_renderer:
                     self.background_imagery.blit(self.obj_render_images.wood_wall, (self.x_counter, self.y_counter))
         return self.background_imagery
 
