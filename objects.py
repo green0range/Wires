@@ -20,7 +20,6 @@ class Handler:
         global active_objects
         active_objects = obj
         self.graphic = graphics.Objects()
-        o = Wire((0,0))
     def main_loop(self, block=(0,0), counter=0):
         global solid
         if "door" in active_objects[counter]:
@@ -73,42 +72,27 @@ class Player:
             if self.check_collisions((self.x+5, self.y)):
                 self.x += 1
                 sleep(0.001)
+                create_wire((500,200))
     def render(self):
         return self.current, (self.x, self.y)
 
 
-class Wire:
-    global tile_w, tile_h, map_w, map_h
-    def __init__(self, position, type="electric.insulated"):
-        global tile_w, tile_h, map_w, map_h
-        try:
-            self.x = int(position[0]/tile_w) * tile_w
-        except ZeroDivisionError:
-            self.x = 0
-        try:
-            self.y = int(position[1]/tile_h) * tile_h
-        except ZeroDivisionError:
-            self.y = 0
-        self.object_w_positions = []
-        print self.x, self.y
-        for i in range(0, len(active_objects)):
-            # Find x,y coordinates for ordered object list
-            try:
-                x = (i - (int(i/map_w) * map_w)) * tile_w
-            except ZeroDivisionError:
-                x = 0
-            try:
-                y = int(i/map_h) * tile_h
-            except ZeroDivisionError:
-                y = 0
-            self.object_w_positions.append((x,y,i))
-            if self.x == x and self.y == y:
-                # Placing on top of other object
-                if active_objects[i] == "none":
-                    active_objects[i] = "wire_electric_insulated"
-                    print i
-                else:
-                    print "dsfdsgdg" + str(i)
-                    raise ValueError("ERR-IN-003")
-
-        print self.object_w_positions
+def create_wire(position, type="electric.insulated"):
+    global tile_w, tile_h, map_w, map_h, active_objects
+    print position
+    try:
+        x = int(position[0]/tile_w) * tile_w
+    except ZeroDivisionError:
+        x = 0
+    try:
+        y = int(position[1]/tile_h) * tile_h
+    except ZeroDivisionError:
+        y = 0
+    x_order = int(x/tile_w)
+    y_order = int(y/tile_h)
+    order = (y_order * map_w) + x_order
+    print order
+    if active_objects[order] == "none":
+        active_objects[order] = "electric_insulated_wire"
+    else:
+        raise ValueError("ERR-IN-003")
