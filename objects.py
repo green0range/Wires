@@ -16,7 +16,7 @@ solid = []
 
 class Player_items:
     def __init__(self):
-        self.wires = 10
+        self.wires = 50
 
 
 class Handler:
@@ -91,10 +91,32 @@ class Player:
     def render(self):
         return self.current, (self.x, self.y)
 
+def get_wire_direction(position):
+    global tile_w, tile_h, map_w, map_h, active_objects
+    try:
+        x = int(position[0]/tile_w) * tile_w
+    except ZeroDivisionError:
+        x = 0
+    try:
+        y = int(position[1]/tile_h) * tile_h
+    except ZeroDivisionError:
+        y = 0
+    if "wire" in active_objects[detect_item((x+tile_w+10, y))] and "wire" in active_objects[detect_item((x, y+tile_h+10))]:
+        return "es"
+    elif "wire" in active_objects[detect_item((x+tile_w+10, y))] and "wire" in active_objects[detect_item((x, y-tile_h+10))]:
+        return "ne"
+    elif "wire" in active_objects[detect_item((x-tile_w+10, y))] and "wire" in active_objects[detect_item((x, y-tile_h+10))]:
+        return "nw"
+    elif "wire" in active_objects[detect_item((x-tile_w+10, y))] and "wire" in active_objects[detect_item((x, y+tile_h+10))]:
+        return "sw"
+    elif "wire" in active_objects[detect_item((x+tile_w+10, y))] or "wire" in active_objects[detect_item((x-tile_w+10, y))]:
+        return "ew"
+    else:
+        return "ns"
+
 
 def detect_item(position):
     global tile_w, tile_h, map_w, map_h
-    print position
     try:
         x = int(position[0]/tile_w) * tile_w
     except ZeroDivisionError:
@@ -108,7 +130,7 @@ def detect_item(position):
     order = (y_order * map_w) + x_order
     return order
 
-def create_wire(position, type="electric.insulated"):  # TODO: wiretypes
+def create_wire(position, type="electric_insulated"):  # TODO: wiretypes
     global active_objects
     order = detect_item(position)
     if active_objects[order] == "none":

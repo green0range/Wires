@@ -46,7 +46,13 @@ class Objects:
             path.join("assets", "objects", "wood_door_n.png"),
             path.join("assets", "objects", "wood_door_e.png"),
             path.join("assets", "objects", "wood_door_s.png"),
-            path.join("assets", "objects", "wood_wall.png")
+            path.join("assets", "objects", "wood_wall.png"),
+            path.join("assets", "objects", "wires", "wire_electrical_insulated_es.png"),
+            path.join("assets", "objects", "wires", "wire_electrical_insulated_ew.png"),
+            path.join("assets", "objects", "wires", "wire_electrical_insulated_ne.png"),
+            path.join("assets", "objects", "wires", "wire_electrical_insulated_ns.png"),
+            path.join("assets", "objects", "wires", "wire_electrical_insulated_nw.png"),
+            path.join("assets", "objects", "wires", "wire_electrical_insulated_sw.png")
         ]
         export_list = []
         for i in range (0, len(import_list)):
@@ -59,6 +65,12 @@ class Objects:
         self.wood_door_e = export_list[2]
         self.wood_door_s = export_list[3]
         self.wood_wall = export_list[4]
+        self.wire_electric_insulated_es = export_list[5]
+        self.wire_electric_insulated_ew = export_list[6]
+        self.wire_electric_insulated_ne = export_list[7]
+        self.wire_electric_insulated_ns = export_list[8]
+        self.wire_electric_insulated_nw = export_list[9]
+        self.wire_electric_insulated_sw = export_list[10]
         # Clear export list to save space
         export_list = 0
 
@@ -174,7 +186,19 @@ class MapImports:
                 if "wall" in obj_tmp_renderer:
                     self.background_imagery.blit(self.obj_render_images.wood_wall, (self.x_counter, self.y_counter))
                 if "wire" in obj_tmp_renderer:
-                    self.background_imagery.blit(self.obj_render_images.wood_wall, (self.x_counter, self.y_counter))
+                    i = objects.get_wire_direction((self.x_counter, self.y_counter))
+                    if i == "ns":
+                        self.background_imagery.blit(self.obj_render_images.wire_electric_insulated_ns, (self.x_counter, self.y_counter))
+                    elif i == "ew":
+                        self.background_imagery.blit(self.obj_render_images.wire_electric_insulated_ew, (self.x_counter, self.y_counter))
+                    elif i == "es":
+                        self.background_imagery.blit(self.obj_render_images.wire_electric_insulated_es, (self.x_counter, self.y_counter))
+                    elif i == "ne":
+                        self.background_imagery.blit(self.obj_render_images.wire_electric_insulated_ne, (self.x_counter, self.y_counter))
+                    elif i == "nw":
+                        self.background_imagery.blit(self.obj_render_images.wire_electric_insulated_nw, (self.x_counter, self.y_counter))
+                    elif i == "sw":
+                        self.background_imagery.blit(self.obj_render_images.wire_electric_insulated_sw, (self.x_counter, self.y_counter))
         return self.background_imagery
 
 
