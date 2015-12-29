@@ -14,6 +14,11 @@ active_objects = []  # this includes placed objects, Handler's self.objects MUST
 
 solid = []
 
+class Player_items:
+    def __init__(self):
+        self.wires = 10
+
+
 class Handler:
     global solid, active_objects
     def __init__(self, obj):
@@ -40,6 +45,7 @@ class Player:
         self.x = 500
         self.y = 200
         self.current = "north"
+        self.items = Player_items()
     def check_collisions(self, pos):  # TODO: fix slow warp through block thing
         try:
             solids_in_use = True
@@ -72,13 +78,22 @@ class Player:
             if self.check_collisions((self.x+5, self.y)):
                 self.x += 1
                 sleep(0.001)
-                create_wire((500,200))
+        if keys[K_e]:
+            if "none" in active_objects[detect_item((self.x, self.y))]:
+                if self.items.wires > 0:
+                    if create_wire((self.x, self.y)):
+                        self.items.wires -=1
+                        sleep(0.3)
+            elif "wire" in active_objects[detect_item((self.x, self.y))]:
+                if remove_wire((self.x, self.y)):
+                    self.items.wires +=1
+                sleep(0.3)
     def render(self):
         return self.current, (self.x, self.y)
 
 
-def create_wire(position, type="electric.insulated"):
-    global tile_w, tile_h, map_w, map_h, active_objects
+def detect_item(position):
+    global tile_w, tile_h, map_w, map_h
     print position
     try:
         x = int(position[0]/tile_w) * tile_w
@@ -91,8 +106,22 @@ def create_wire(position, type="electric.insulated"):
     x_order = int(x/tile_w)
     y_order = int(y/tile_h)
     order = (y_order * map_w) + x_order
-    print order
+    return order
+
+def create_wire(position, type="electric.insulated"):  # TODO: wiretypes
+    global active_objects
+    order = detect_item(position)
     if active_objects[order] == "none":
         active_objects[order] = "electric_insulated_wire"
+        return True
     else:
-        raise ValueError("ERR-IN-003")
+        return False  # attempted place on other item
+
+def remove_wire(position):
+    global active_objects
+    order = detect_item(position)
+    if "wire" in active_objects[order]:
+        active_objects[order] = "none"
+        return True
+    else:
+        return False  # not on a wire
