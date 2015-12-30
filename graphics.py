@@ -175,21 +175,7 @@ class MapImports:
                     self.background_imagery.blit(self.t.wood_floor, (self.x_counter, self.y_counter))
 
                 obj_tmp_renderer = self.object_handler.main_loop(block=(self.x_counter, self.y_counter), counter=self.terrain_counter)
-                if "door" in obj_tmp_renderer:
-                    if "wood" in obj_tmp_renderer:
-                        if "_n" in obj_tmp_renderer:
-                            self.background_imagery.blit(self.obj_render_images.wood_door_n, (self.x_counter, self.y_counter))
-                        if "_e" in obj_tmp_renderer:
-                            self.background_imagery.blit(self.obj_render_images.wood_door_e, (self.x_counter, self.y_counter))
-                        if "_s" in obj_tmp_renderer:
-                            self.background_imagery.blit(self.obj_render_images.wood_door_s, (self.x_counter, self.y_counter))
-                        if "_w" in obj_tmp_renderer:
-                            self.background_imagery.blit(self.obj_render_images.wood_door_w, (self.x_counter, self.y_counter))
-                elif "wall" in obj_tmp_renderer:
-                    self.background_imagery.blit(self.obj_render_images.wood_wall, (self.x_counter, self.y_counter))
-                elif "power_station" in obj_tmp_renderer:
-                    self.background_imagery.blit(self.obj_render_images.power_station, (self.x_counter, self.y_counter))
-                elif "wire" in obj_tmp_renderer:
+                if "wire" in obj_tmp_renderer:
                     if "electric" in obj_tmp_renderer:
                         i = objects.get_wire_direction((self.x_counter, self.y_counter))
                         if i == "ns":
@@ -204,6 +190,20 @@ class MapImports:
                             self.background_imagery.blit(self.obj_render_images.wire_electric_insulated_nw, (self.x_counter, self.y_counter))
                         elif i == "sw":
                             self.background_imagery.blit(self.obj_render_images.wire_electric_insulated_sw, (self.x_counter, self.y_counter))
+                elif "door" in obj_tmp_renderer:
+                    if "wood" in obj_tmp_renderer:
+                        if "_n" in obj_tmp_renderer:
+                            self.background_imagery.blit(self.obj_render_images.wood_door_n, (self.x_counter, self.y_counter))
+                        if "_e" in obj_tmp_renderer:
+                            self.background_imagery.blit(self.obj_render_images.wood_door_e, (self.x_counter, self.y_counter))
+                        if "_s" in obj_tmp_renderer:
+                            self.background_imagery.blit(self.obj_render_images.wood_door_s, (self.x_counter, self.y_counter))
+                        if "_w" in obj_tmp_renderer:
+                            self.background_imagery.blit(self.obj_render_images.wood_door_w, (self.x_counter, self.y_counter))
+                elif "wall" in obj_tmp_renderer:
+                    self.background_imagery.blit(self.obj_render_images.wood_wall, (self.x_counter, self.y_counter))
+                elif "power_station" in obj_tmp_renderer:
+                    self.background_imagery.blit(self.obj_render_images.power_station, (self.x_counter, self.y_counter))
         return self.background_imagery
 
 

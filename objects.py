@@ -18,6 +18,20 @@ class Player_items:
     def __init__(self):
         self.wires = 50
 
+def detect_item(position):
+    global tile_w, tile_h, map_w, map_h
+    try:
+        x = int(position[0]/tile_w) * tile_w
+    except ZeroDivisionError:
+        x = 0
+    try:
+        y = int(position[1]/tile_h) * tile_h
+    except ZeroDivisionError:
+        y = 0
+    x_order = int(x/tile_w)
+    y_order = int(y/tile_h)
+    order = (y_order * map_w) + x_order
+    return order
 
 class Handler:
     global solid, active_objects
@@ -25,11 +39,33 @@ class Handler:
         global active_objects
         active_objects = obj
         self.graphic = graphics.Objects()
+    def door_opening_check(self, position):
+        for i in range(0, 100):# Timeout in case break fails
+            if "power_station" in active_objects[detect_item((position[0]-tile_w, position[1]))]:
+                return True
+            elif "power_station" in active_objects[detect_item((position[0]+tile_w, position[1]))]:
+                return True
+            elif "power_station" in active_objects[detect_item((position[0], position[1]-tile_h))]:
+                return True
+            elif "power_station" in active_objects[detect_item((position[0]-tile_w, position[1]+tile_h))]:
+                return True
+            else:
+                if "electric" and "wire" in active_objects[detect_item((position[0]-tile_w, position[1]))]:# left
+                    position = (position[0]-tile_w, position[1])
+                elif "electric" and "wire" in active_objects[detect_item((position[0]+tile_w, position[1]))]:# right
+                    position = (position[0]+tile_w, position[1])
+                elif "electric" and "wire" in active_objects[detect_item((position[0], position[1]-tile_h))]:# up
+                    position = (position[0], position[1]-tile_h)
+                elif "electric" and "wire" in active_objects[detect_item((position[0], position[1]+tile_h))]:# down
+                    position = (position[0], position[1]+tile_h)
+                else:
+                    return False
     def main_loop(self, block=(0,0), counter=0):
         global solid
         if "door" in active_objects[counter]:
-            # TODO: door stuff
-            pass
+            state = self.door_opening_check(block)
+            if state == False:
+                solid.append(block)
         if "wall" in active_objects[counter]:
             solid.append(block)
             # TODO: solidise
@@ -101,40 +137,24 @@ def get_wire_direction(position):
         y = int(position[1]/tile_h) * tile_h
     except ZeroDivisionError:
         y = 0
-    if "wire" in active_objects[detect_item((x+tile_w+10, y))] and "wire" in active_objects[detect_item((x, y+tile_h+10))]:
+    if "connect" in active_objects[detect_item((x+tile_w+10, y))] and "connect" in active_objects[detect_item((x, y+tile_h+10))]:
         return "es"
-    elif "wire" in active_objects[detect_item((x+tile_w+10, y))] and "wire" in active_objects[detect_item((x, y-tile_h+10))]:
+    elif "connect" in active_objects[detect_item((x+tile_w+10, y))] and "connect" in active_objects[detect_item((x, y-tile_h+10))]:
         return "ne"
-    elif "wire" in active_objects[detect_item((x-tile_w+10, y))] and "wire" in active_objects[detect_item((x, y-tile_h+10))]:
+    elif "connect" in active_objects[detect_item((x-tile_w+10, y))] and "connect" in active_objects[detect_item((x, y-tile_h+10))]:
         return "nw"
-    elif "wire" in active_objects[detect_item((x-tile_w+10, y))] and "wire" in active_objects[detect_item((x, y+tile_h+10))]:
+    elif "connect" in active_objects[detect_item((x-tile_w+10, y))] and "connect" in active_objects[detect_item((x, y+tile_h+10))]:
         return "sw"
-    elif "wire" in active_objects[detect_item((x+tile_w+10, y))] or "wire" in active_objects[detect_item((x-tile_w+10, y))]:
+    elif "connect" in active_objects[detect_item((x+tile_w+10, y))] or "connect" in active_objects[detect_item((x-tile_w+10, y))]:
         return "ew"
     else:
         return "ns"
-
-
-def detect_item(position):
-    global tile_w, tile_h, map_w, map_h
-    try:
-        x = int(position[0]/tile_w) * tile_w
-    except ZeroDivisionError:
-        x = 0
-    try:
-        y = int(position[1]/tile_h) * tile_h
-    except ZeroDivisionError:
-        y = 0
-    x_order = int(x/tile_w)
-    y_order = int(y/tile_h)
-    order = (y_order * map_w) + x_order
-    return order
 
 def create_wire(position, type="electric_insulated"):  # TODO: wiretypes
     global active_objects
     order = detect_item(position)
     if active_objects[order] == "none":
-        active_objects[order] = "electric_insulated_wire"
+        active_objects[order] = "electric_insulated_wire_wireconnect"
         return True
     else:
         return False  # attempted place on other item
