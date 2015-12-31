@@ -10,6 +10,8 @@ def give_tile_data(w, h, mw, mh):
     tile_w, tile_h = w, h
     map_w, map_h = mw, mh
 
+open_doors = []  # This lets the rendering rendering thread know which doors to render as open
+
 active_objects = []  # this includes placed objects, Handler's self.objects MUST be updated to this after placing.
 
 solid = []
@@ -34,12 +36,12 @@ def detect_item(position):
     return order
 
 class Handler:
-    global solid, active_objects
+    global solid, active_objects, open_doors
     def __init__(self, obj):
         global active_objects
         active_objects = obj
         self.graphic = graphics.Objects()
-    def door_opening_check(self, position):
+    def door_opening_check(self, position):  # FIXME: two wires will trigger door
         for i in range(0, 100):# Timeout in case break fails
             if "power_station" in active_objects[detect_item((position[0]-tile_w, position[1]))]:
                 return True
@@ -61,11 +63,22 @@ class Handler:
                 else:
                     return False
     def main_loop(self, block=(0,0), counter=0):
-        global solid
+        global solid, open_doors
         if "door" in active_objects[counter]:
             state = self.door_opening_check(block)
             if state == False:
                 solid.append(block)
+                if block in open_doors:
+                    tmp = []
+                    for i in range(0, len(open_doors)):
+                        if open_doors[i] == block:
+                            pass
+                    else:
+                        tmp.append(open_doors[i])
+                    open_doors = tmp
+            else:
+                if not block in open_doors:
+                    open_doors.append(block)
         if "wall" in active_objects[counter]:
             solid.append(block)
             # TODO: solidise
@@ -154,7 +167,7 @@ def create_wire(position, type="electric_insulated"):  # TODO: wiretypes
     global active_objects
     order = detect_item(position)
     if active_objects[order] == "none":
-        active_objects[order] = "electric_insulated_wire_wireconnect"
+        active_objects[order] = "electric_insulated_wire_connect"
         return True
     else:
         return False  # attempted place on other item

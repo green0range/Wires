@@ -42,10 +42,10 @@ class Objects:
         global tile_w, tile_h
         # Bulk imports
         import_list = [
-            path.join("assets", "objects", "wood_door_w.png"),
-            path.join("assets", "objects", "wood_door_n.png"),
-            path.join("assets", "objects", "wood_door_e.png"),
-            path.join("assets", "objects", "wood_door_s.png"),
+            path.join("assets", "objects", "wood_door_base_ns.png"),
+            path.join("assets", "objects", "wood_door_ns.png"),
+            path.join("assets", "objects", "wood_door_base_ew.png"),
+            path.join("assets", "objects", "wood_door_ew.png"),
             path.join("assets", "objects", "wood_wall.png"),
             path.join("assets", "objects", "wires", "wire_electrical_insulated_es.png"),
             path.join("assets", "objects", "wires", "wire_electrical_insulated_ew.png"),
@@ -61,10 +61,10 @@ class Objects:
             export_list.append(transform.scale(tmp, (tile_w, tile_h)))
         tmp = 0
         # Convert to easier naming system
-        self.wood_door_w = export_list[0]
-        self.wood_door_n = export_list[1]
-        self.wood_door_e = export_list[2]
-        self.wood_door_s = export_list[3]
+        self.wood_door_base_ns = export_list[0]
+        self.wood_door_ns = export_list[1]
+        self.wood_door_base_ew = export_list[2]
+        self.wood_door_ew = export_list[3]
         self.wood_wall = export_list[4]
         self.wire_electric_insulated_es = export_list[5]
         self.wire_electric_insulated_ew = export_list[6]
@@ -192,14 +192,14 @@ class MapImports:
                             self.background_imagery.blit(self.obj_render_images.wire_electric_insulated_sw, (self.x_counter, self.y_counter))
                 elif "door" in obj_tmp_renderer:
                     if "wood" in obj_tmp_renderer:
-                        if "_n" in obj_tmp_renderer:
-                            self.background_imagery.blit(self.obj_render_images.wood_door_n, (self.x_counter, self.y_counter))
-                        if "_e" in obj_tmp_renderer:
-                            self.background_imagery.blit(self.obj_render_images.wood_door_e, (self.x_counter, self.y_counter))
-                        if "_s" in obj_tmp_renderer:
-                            self.background_imagery.blit(self.obj_render_images.wood_door_s, (self.x_counter, self.y_counter))
-                        if "_w" in obj_tmp_renderer:
-                            self.background_imagery.blit(self.obj_render_images.wood_door_w, (self.x_counter, self.y_counter))
+                        if "ns" in obj_tmp_renderer:
+                            self.background_imagery.blit(self.obj_render_images.wood_door_base_ns, (self.x_counter, self.y_counter))
+                            if not (self.x_counter, self.y_counter) in objects.open_doors:
+                                self.background_imagery.blit(self.obj_render_images.wood_door_ns, (self.x_counter, self.y_counter))
+                        elif "ew" in obj_tmp_renderer:
+                            self.background_imagery.blit(self.obj_render_images.wood_door_base_ew, (self.x_counter, self.y_counter))
+                            if not (self.x_counter, self.y_counter) in objects.open_doors:
+                                self.background_imagery.blit(self.obj_render_images.wood_door_ew, (self.x_counter, self.y_counter))
                 elif "wall" in obj_tmp_renderer:
                     self.background_imagery.blit(self.obj_render_images.wood_wall, (self.x_counter, self.y_counter))
                 elif "power_station" in obj_tmp_renderer:
