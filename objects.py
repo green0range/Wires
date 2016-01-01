@@ -85,6 +85,9 @@ class Handler:
         if "wire" in active_objects[counter]:
             # TODO: Wire stuff
             pass
+        if "nails" in active_objects[counter]:
+            # TODO: DIE
+            pass
         return active_objects[counter]
 
 class Player:

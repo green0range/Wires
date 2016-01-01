@@ -21,7 +21,9 @@ class Terrain:
         objects.give_tile_data(tile_w, tile_h, tile[0], tile[1])
         # Bulk imports
         import_list = [
-            path.join("assets", "terrain", "wood_floor.jpg")
+            path.join("assets", "terrain", "wood_floor.jpg"),
+            path.join("assets", "terrain", "marble_floor.jpg"),
+            path.join("assets", "terrain", "stone_floor.jpg")
         ]
         export_list = []
         for i in range (0, len(import_list)):
@@ -30,6 +32,8 @@ class Terrain:
         tmp = 0
         # Convert to easier naming system
         self.wood_floor = export_list[0]
+        self.marble_floor = export_list[1]
+        self.stone_floor = export_list[2]
         # Clear export list to save space
         export_list = 0
 
@@ -53,7 +57,8 @@ class Objects:
             path.join("assets", "objects", "wires", "wire_electrical_insulated_ns.png"),
             path.join("assets", "objects", "wires", "wire_electrical_insulated_nw.png"),
             path.join("assets", "objects", "wires", "wire_electrical_insulated_sw.png"),
-            path.join("assets", "objects", "wires", "power_station.png")
+            path.join("assets", "objects", "wires", "power_station.png"),
+            path.join("assets", "objects", "nails.png")
         ]
         export_list = []
         for i in range (0, len(import_list)):
@@ -73,6 +78,7 @@ class Objects:
         self.wire_electric_insulated_nw = export_list[9]
         self.wire_electric_insulated_sw = export_list[10]
         self.power_station = export_list[11]
+        self.nails = export_list[12]
         # Clear export list to save space
         export_list = 0
 
@@ -173,7 +179,10 @@ class MapImports:
                 self.object_render_control = self.object_handler.main_loop(block=(self.x_counter, self.y_counter), counter=self.terrain_counter)
                 if self.terrain[self.terrain_counter] == "wood_floor":
                     self.background_imagery.blit(self.t.wood_floor, (self.x_counter, self.y_counter))
-
+                elif self.terrain[self.terrain_counter] == "marble_floor":
+                    self.background_imagery.blit(self.t.marble_floor, (self.x_counter, self.y_counter))
+                elif self.terrain[self.terrain_counter] == "stone_floor":
+                    self.background_imagery.blit(self.t.stone_floor, (self.x_counter, self.y_counter))
                 obj_tmp_renderer = self.object_handler.main_loop(block=(self.x_counter, self.y_counter), counter=self.terrain_counter)
                 if "wire" in obj_tmp_renderer:
                     if "electric" in obj_tmp_renderer:
@@ -204,6 +213,8 @@ class MapImports:
                     self.background_imagery.blit(self.obj_render_images.wood_wall, (self.x_counter, self.y_counter))
                 elif "power_station" in obj_tmp_renderer:
                     self.background_imagery.blit(self.obj_render_images.power_station, (self.x_counter, self.y_counter))
+                elif "nails" in obj_tmp_renderer:
+                    self.background_imagery.blit(self.obj_render_images.nails, (self.x_counter, self.y_counter))
         return self.background_imagery
 
 
