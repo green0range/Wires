@@ -58,7 +58,9 @@ class Objects:
             path.join("assets", "objects", "wires", "wire_electrical_insulated_nw.png"),
             path.join("assets", "objects", "wires", "wire_electrical_insulated_sw.png"),
             path.join("assets", "objects", "wires", "power_station.png"),
-            path.join("assets", "objects", "nails.png")
+            path.join("assets", "objects", "nails.png"),
+            path.join("assets", "objects", "marble_wall.png"),
+            path.join("assets", "objects", "meatuara_ns.png")
         ]
         export_list = []
         for i in range (0, len(import_list)):
@@ -79,6 +81,8 @@ class Objects:
         self.wire_electric_insulated_sw = export_list[10]
         self.power_station = export_list[11]
         self.nails = export_list[12]
+        self.marble_wall = export_list[13]
+        self.meatuara_ns = export_list[14]
         # Clear export list to save space
         export_list = 0
 
@@ -210,11 +214,18 @@ class MapImports:
                             if not (self.x_counter, self.y_counter) in objects.open_doors:
                                 self.background_imagery.blit(self.obj_render_images.wood_door_ew, (self.x_counter, self.y_counter))
                 elif "wall" in obj_tmp_renderer:
-                    self.background_imagery.blit(self.obj_render_images.wood_wall, (self.x_counter, self.y_counter))
+                    if "wood" in obj_tmp_renderer:
+                        self.background_imagery.blit(self.obj_render_images.wood_wall, (self.x_counter, self.y_counter))
+                    elif "marble" in obj_tmp_renderer:
+                        self.background_imagery.blit(self.obj_render_images.marble_wall, (self.x_counter, self.y_counter))
                 elif "power_station" in obj_tmp_renderer:
                     self.background_imagery.blit(self.obj_render_images.power_station, (self.x_counter, self.y_counter))
                 elif "nails" in obj_tmp_renderer:
                     self.background_imagery.blit(self.obj_render_images.nails, (self.x_counter, self.y_counter))
+                elif "meatuara" in obj_tmp_renderer:
+
+                    self.background_imagery.blit(self.obj_render_images.meatuara_ns, (self.x_counter, self.y_counter))
+        objects.first_time = False
         return self.background_imagery
 
 

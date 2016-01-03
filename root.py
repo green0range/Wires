@@ -12,7 +12,7 @@ import objects
 init()
 
 fullscreen = False
-render_update_rate = 100
+render_update_rate = 10
 stop = False
 screen = (800, 800) # TODO: make launcher /w screen size parameter
 
@@ -93,8 +93,6 @@ class GameWindow:
                         doupdate = False
                 if doupdate:
                     display.flip()
-            if not objects.solids_in_use:
-                objects.solid = []
 
     def foregroundrenderloop(self):
         player_img_dat = self.player.render()
