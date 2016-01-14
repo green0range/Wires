@@ -14,7 +14,7 @@ init()
 fullscreen = False
 render_update_rate = 10
 stop = False
-screen = (800, 800) # TODO: make launcher /w screen size parameter
+screen = (600, 600) # TODO: make launcher /w screen size parameter
 
 class GameWindow:
     global screen, stop
@@ -94,6 +94,11 @@ class GameWindow:
                 if doupdate:
                     display.flip()
 
+    def objectsloop(self):
+        h = objects.Handler()
+        if len(objects.handler_input_all) == objects.map_w * objects.map_h -1:
+            h.main_loop()
+
     def foregroundrenderloop(self):
         player_img_dat = self.player.render()
         img = self.select_player_images((player_img_dat[0]))
@@ -102,6 +107,7 @@ class GameWindow:
 
 gw = GameWindow()
 
+# handles player, movement, keypresses, etc.
 class GameThread(Thread):
     global gw
     def __init__(self):
@@ -113,7 +119,17 @@ class GameThread(Thread):
         while True:
             gw.mainloop()
 
-class BackgroundRenderThread(Thread):
+class ObjectsThread(Thread):
+    def __init__(self):
+        Thread.__init__(self)
+        self.daemon = True
+        self.start()
+    def run(self):
+        while True:
+            gw.objectsloop()
+
+# Renders everything
+class RenderThread(Thread):
     global gw
     def __init__(self):
         Thread.__init__(self)
@@ -124,18 +140,9 @@ class BackgroundRenderThread(Thread):
         while True:
             gw.backgroundrenderloop()
 
-class ForegroundRenderThread(Thread):
-    def __init__(self):
-        Thread.__init__(self)
-        self.daemon = True
-        self.start()
-    def run(self):
-        while True:
-            gw.foregroundrenderloop()
-
 
 GameThread()
-BackgroundRenderThread()
-#ForegroundRenderThread()
+ObjectsThread()
+RenderThread()
 while not stop:
     pass

@@ -93,6 +93,10 @@ class PlayerImg:
         self.south = image.load(path.join("assets", "objects", "player", "south.png")).convert_alpha()
         self.west = image.load(path.join("assets", "objects", "player", "west.png")).convert_alpha()
 
+
+object_surface = Surface((objects.map_w, objects.map_h), SRCALPHA)
+object_surface.fill((0,0,0,255))
+
 # This class imports map files, separates data, and then perpares for rendering. The import_map
 # function must be called once first, and then for every new map. The render function runs off'
 # data prepared in the import_map function, and should be looped after the import is called.
@@ -101,9 +105,14 @@ class PlayerImg:
 # value. Objects are passed to the object handle after being read from the map file. Meta data
 # about the map, such as title, author and description can also be gained with the get_info function.
 class MapImports:
+    global object_surface
     def __init__(self, screen):
         self.screen = screen
         self.background_imagery = Surface(screen)
+        self.moving_objects = Surface(screen, SRCALPHA, 32)
+        self.moving_objects.convert_alpha()
+        self.i = 0
+        self.i_unlock = True
     def import_map(self, m=(path.join("assets", "maps", "testmap.wrm")), want_meta=False):
         try:
             f = open(m, "r")
@@ -144,7 +153,7 @@ class MapImports:
             self.objects = []
             for i in range(0, area):
                 self.objects.append(f_raw[object_point+1+i])
-            self.object_handler = objects.Handler(self.objects)  # Creates object handler here
+            objects.active_objects = self.objects
             if want_meta:
                 self.title = (f_raw[title_point + 1])
                 self.author = (f_raw[author_point + 1])
@@ -161,9 +170,9 @@ class MapImports:
         self.x_counter = -(self.screen[0]/self.map_w)
         self.y_counter = 0
         self.terrain_counter = -1
-        self.obj_render_images = Objects()
 
     def render(self):
+        global object_surface
         # Terrain rendering starts at top left tile then left -> right -> Next line repeat. Until all is rendered.
         # This relies on being constantly repeated in another function. It forwards all object render data from
         # the object controller. Yeah, it's pass the parcel in here.
@@ -180,55 +189,103 @@ class MapImports:
                 self.terrain_counter = -1
                 restart = True
             if not restart:
-                self.object_render_control = self.object_handler.main_loop(block=(self.x_counter, self.y_counter), counter=self.terrain_counter)
                 if self.terrain[self.terrain_counter] == "wood_floor":
                     self.background_imagery.blit(self.t.wood_floor, (self.x_counter, self.y_counter))
                 elif self.terrain[self.terrain_counter] == "marble_floor":
                     self.background_imagery.blit(self.t.marble_floor, (self.x_counter, self.y_counter))
                 elif self.terrain[self.terrain_counter] == "stone_floor":
                     self.background_imagery.blit(self.t.stone_floor, (self.x_counter, self.y_counter))
-                obj_tmp_renderer = self.object_handler.main_loop(block=(self.x_counter, self.y_counter), counter=self.terrain_counter)
-                if "wire" in obj_tmp_renderer:
+                objects.handler_input = ((self.x_counter, self.y_counter), self.terrain_counter)
+                obj_tmp_renderer = objects.handler_output
+                self.i +=1
+                if self.i_unlock:
+                    if self.i < 100:
+                        objects.handler_input_all.append((self.y_counter, self.x_counter))
+                    else:
+                        self.i_unlock = False
+                        print objects.handler_input_all
+                """if "wire" in obj_tmp_renderer:
                     if "electric" in obj_tmp_renderer:
-                        i = objects.get_wire_direction((self.x_counter, self.y_counter))
+                        i = objects.get_wire_direction((objects.handler_output_position[0], objects.handler_output_position[1]))
                         if i == "ns":
-                            self.background_imagery.blit(self.obj_render_images.wire_electric_insulated_ns, (self.x_counter, self.y_counter))
+                            self.background_imagery.blit(self.obj_render_images.wire_electric_insulated_ns, (objects.handler_output_position[0], objects.handler_output_position[1]))
                         elif i == "ew":
-                            self.background_imagery.blit(self.obj_render_images.wire_electric_insulated_ew, (self.x_counter, self.y_counter))
+                            self.background_imagery.blit(self.obj_render_images.wire_electric_insulated_ew, (objects.handler_output_position[0], objects.handler_output_position[1]))
                         elif i == "es":
-                            self.background_imagery.blit(self.obj_render_images.wire_electric_insulated_es, (self.x_counter, self.y_counter))
+                            self.background_imagery.blit(self.obj_render_images.wire_electric_insulated_es, (objects.handler_output_position[0], objects.handler_output_position[1]))
                         elif i == "ne":
-                            self.background_imagery.blit(self.obj_render_images.wire_electric_insulated_ne, (self.x_counter, self.y_counter))
+                            self.background_imagery.blit(self.obj_render_images.wire_electric_insulated_ne, (objects.handler_output_position[0], objects.handler_output_position[1]))
                         elif i == "nw":
-                            self.background_imagery.blit(self.obj_render_images.wire_electric_insulated_nw, (self.x_counter, self.y_counter))
+                            self.background_imagery.blit(self.obj_render_images.wire_electric_insulated_nw, (objects.handler_output_position[0], objects.handler_output_position[1]))
                         elif i == "sw":
-                            self.background_imagery.blit(self.obj_render_images.wire_electric_insulated_sw, (self.x_counter, self.y_counter))
+                            self.background_imagery.blit(self.obj_render_images.wire_electric_insulated_sw, (objects.handler_output_position[0], objects.handler_output_position[1]))
                 elif "door" in obj_tmp_renderer:
                     if "wood" in obj_tmp_renderer:
                         if "ns" in obj_tmp_renderer:
-                            self.background_imagery.blit(self.obj_render_images.wood_door_base_ns, (self.x_counter, self.y_counter))
-                            if not (self.x_counter, self.y_counter) in objects.open_doors:
-                                self.background_imagery.blit(self.obj_render_images.wood_door_ns, (self.x_counter, self.y_counter))
+                            self.background_imagery.blit(self.obj_render_images.wood_door_base_ns, (objects.handler_output_position[0], objects.handler_output_position[1]))
+                            if not (objects.handler_output_position[0], objects.handler_output_position[1]) in objects.open_doors:
+                                self.background_imagery.blit(self.obj_render_images.wood_door_ns, (objects.handler_output_position[0], objects.handler_output_position[1]))
                         elif "ew" in obj_tmp_renderer:
-                            self.background_imagery.blit(self.obj_render_images.wood_door_base_ew, (self.x_counter, self.y_counter))
-                            if not (self.x_counter, self.y_counter) in objects.open_doors:
-                                self.background_imagery.blit(self.obj_render_images.wood_door_ew, (self.x_counter, self.y_counter))
+                            self.background_imagery.blit(self.obj_render_images.wood_door_base_ew, (objects.handler_output_position[0], objects.handler_output_position[1]))
+                            if not (objects.handler_output_position[0], objects.handler_output_position[1]) in objects.open_doors:
+                                self.background_imagery.blit(self.obj_render_images.wood_door_ew, (objects.handler_output_position[0], objects.handler_output_position[1]))
                 elif "wall" in obj_tmp_renderer:
                     if "wood" in obj_tmp_renderer:
-                        self.background_imagery.blit(self.obj_render_images.wood_wall, (self.x_counter, self.y_counter))
+                        self.background_imagery.blit(self.obj_render_images.wood_wall, (objects.handler_output_position[0], objects.handler_output_position[1]))
                     elif "marble" in obj_tmp_renderer:
-                        self.background_imagery.blit(self.obj_render_images.marble_wall, (self.x_counter, self.y_counter))
+                        self.background_imagery.blit(self.obj_render_images.marble_wall, (objects.handler_output_position[0], objects.handler_output_position[1]))
                 elif "power_station" in obj_tmp_renderer:
-                    self.background_imagery.blit(self.obj_render_images.power_station, (self.x_counter, self.y_counter))
+                    self.background_imagery.blit(self.obj_render_images.power_station, (objects.handler_output_position[0], objects.handler_output_position[1]))
                 elif "nails" in obj_tmp_renderer:
-                    self.background_imagery.blit(self.obj_render_images.nails, (self.x_counter, self.y_counter))
-                elif "meatuara" in obj_tmp_renderer:
-
-                    self.background_imagery.blit(self.obj_render_images.meatuara_ns, (self.x_counter, self.y_counter))
+                    self.background_imagery.blit(self.obj_render_images.nails, (objects.handler_output_position[0], objects.handler_output_position[1]))
+                elif "meatuara_ns" in obj_tmp_renderer:
+                    tmp = obj_tmp_renderer.split(" ")
+                    self.moving_objects.blit(self.obj_render_images.meatuara_ns, (objects.handler_output_position[0], objects.handler_output_position[1] + int(tmp[3])))
+        """
         objects.first_time = False
-        return self.background_imagery
+        self.background_imagery.blit(object_surface, (0,0))
+        return object_surface
 
 
-
-
-                # self.object_render_control
+def prepare_object_blit(id, block):
+    global object_surface
+    obj_render_images = Objects()
+    print "incoming"
+    if "wire" in id:
+        if "electric" in id:
+            i = objects.get_wire_direction(block)
+            if i == "ns":
+                object_surface.blit(obj_render_images.wire_electric_insulated_ns, block)
+            elif i == "ew":
+                object_surface.blit(obj_render_images.wire_electric_insulated_ew, block)
+            elif i == "es":
+                object_surface.blit(obj_render_images.wire_electric_insulated_es, block)
+            elif i == "ne":
+                object_surface.blit(obj_render_images.wire_electric_insulated_ne, block)
+            elif i == "nw":
+                object_surface.blit(obj_render_images.wire_electric_insulated_nw, block)
+            elif i == "sw":
+                object_surface.blit(obj_render_images.wire_electric_insulated_sw, block)
+    elif "door" in id:
+        if "wood" in id:
+            if "ns" in id:
+                object_surface.blit(obj_render_images.wood_door_base_ns, block)
+                if not block in objects.open_doors:
+                    object_surface.blit(obj_render_images.wood_door_ns, block)
+            elif "ew" in id:
+                object_surface.blit(obj_render_images.wood_door_base_ew, block)
+                if not block in objects.open_doors:
+                    object_surface.blit(obj_render_images.wood_door_ew, block)
+    elif "wall" in id:
+        if "wood" in id:
+            object_surface.blit(obj_render_images.wood_wall, block)
+        elif "marble" in id:
+            object_surface.blit(obj_render_images.marble_wall, block)
+    elif "power_station" in id:
+        object_surface.blit(obj_render_images.power_station, block)
+        print "blit_[power"
+    elif "nails" in id:
+        object_surface.blit(obj_render_images.nails, block)
+    elif "meatuara_ns" in id:
+        tmp = id.split(" ")
+                    #moving_objects.blit(obj_render_images.meatuara_ns, (objects.handler_output_position[0], objects.handler_output_position[1] + int(tmp[3])))
