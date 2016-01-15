@@ -35,6 +35,7 @@ class GameWindow:
         self.player = objects.Player()
         self.player_images = graphics.PlayerImg()
         self.clock = time.Clock()
+        self.h = objects.Handler()
     def select_object_images(self, obj_id):
         if obj_id == "wood_door_w":
             return self.object_images.wood_door_w
@@ -76,10 +77,13 @@ class GameWindow:
             # Map rendering
             self.root.blit(self.ma.render(), (0,0))
 
+            #graphics.object_surface
+
             player_img_dat = self.player.render()
             img = self.select_player_images((player_img_dat[0]))
             self.root.blit(img, player_img_dat[1])
-            # Display updates
+            display.flip()
+            '''# Display updates
             if step > 1000:
                 step = 0
             else: # quality/ frame rate/ lag control
@@ -92,18 +96,11 @@ class GameWindow:
                     else:
                         doupdate = False
                 if doupdate:
-                    display.flip()
+                    display.flip()'''
 
     def objectsloop(self):
-        h = objects.Handler()
         if len(objects.handler_input_all) == objects.map_w * objects.map_h -1:
-            h.main_loop()
-
-    def foregroundrenderloop(self):
-        player_img_dat = self.player.render()
-        img = self.select_player_images((player_img_dat[0]))
-        self.root.blit(img, player_img_dat[1])
-        display.flip()
+            self.h.main_loop()
 
 gw = GameWindow()
 
@@ -119,6 +116,8 @@ class GameThread(Thread):
         while True:
             gw.mainloop()
 
+object_timer = time.Clock()
+
 class ObjectsThread(Thread):
     def __init__(self):
         Thread.__init__(self)
@@ -127,6 +126,7 @@ class ObjectsThread(Thread):
     def run(self):
         while True:
             gw.objectsloop()
+            object_timer.tick(100)
 
 # Renders everything
 class RenderThread(Thread):

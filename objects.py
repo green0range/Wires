@@ -92,6 +92,7 @@ class Handler:
         return tmp
     def main_loop(self):
         global solid, open_doors, request, response, handler_output, handler_output_position
+        graphics.object_surface.fill((255,0,255))
         for j in range(0, len(handler_input_all)):
             block = handler_input_all[j]
             counter = j

@@ -94,8 +94,9 @@ class PlayerImg:
         self.west = image.load(path.join("assets", "objects", "player", "west.png")).convert_alpha()
 
 
-object_surface = Surface((objects.map_w, objects.map_h), SRCALPHA)
-object_surface.fill((0,0,0,255))
+object_surface = Surface(screen_size)#((objects.map_w, objects.map_h), SRCALPHA) screen_size
+object_surface.set_colorkey((255,0,255))
+object_surface.fill((255,0,255))
 
 # This class imports map files, separates data, and then perpares for rendering. The import_map
 # function must be called once first, and then for every new map. The render function runs off'
@@ -172,7 +173,7 @@ class MapImports:
         self.terrain_counter = -1
 
     def render(self):
-        global object_surface
+        global object_surface, object_surface_done
         # Terrain rendering starts at top left tile then left -> right -> Next line repeat. Until all is rendered.
         # This relies on being constantly repeated in another function. It forwards all object render data from
         # the object controller. Yeah, it's pass the parcel in here.
@@ -198,12 +199,8 @@ class MapImports:
                 objects.handler_input = ((self.x_counter, self.y_counter), self.terrain_counter)
                 obj_tmp_renderer = objects.handler_output
                 self.i +=1
-                if self.i_unlock:
-                    if self.i < 100:
-                        objects.handler_input_all.append((self.y_counter, self.x_counter))
-                    else:
-                        self.i_unlock = False
-                        print objects.handler_input_all
+                if self.i < 100:
+                    objects.handler_input_all.append((self.x_counter, self.y_counter))
                 """if "wire" in obj_tmp_renderer:
                     if "electric" in obj_tmp_renderer:
                         i = objects.get_wire_direction((objects.handler_output_position[0], objects.handler_output_position[1]))
@@ -244,48 +241,52 @@ class MapImports:
         """
         objects.first_time = False
         self.background_imagery.blit(object_surface, (0,0))
-        return object_surface
+        return self.background_imagery
 
+firstTimeObjectBlit = True
 
 def prepare_object_blit(id, block):
-    global object_surface
-    obj_render_images = Objects()
-    print "incoming"
-    if "wire" in id:
-        if "electric" in id:
-            i = objects.get_wire_direction(block)
-            if i == "ns":
-                object_surface.blit(obj_render_images.wire_electric_insulated_ns, block)
-            elif i == "ew":
-                object_surface.blit(obj_render_images.wire_electric_insulated_ew, block)
-            elif i == "es":
-                object_surface.blit(obj_render_images.wire_electric_insulated_es, block)
-            elif i == "ne":
-                object_surface.blit(obj_render_images.wire_electric_insulated_ne, block)
-            elif i == "nw":
-                object_surface.blit(obj_render_images.wire_electric_insulated_nw, block)
-            elif i == "sw":
-                object_surface.blit(obj_render_images.wire_electric_insulated_sw, block)
-    elif "door" in id:
-        if "wood" in id:
-            if "ns" in id:
-                object_surface.blit(obj_render_images.wood_door_base_ns, block)
-                if not block in objects.open_doors:
-                    object_surface.blit(obj_render_images.wood_door_ns, block)
-            elif "ew" in id:
-                object_surface.blit(obj_render_images.wood_door_base_ew, block)
-                if not block in objects.open_doors:
-                    object_surface.blit(obj_render_images.wood_door_ew, block)
-    elif "wall" in id:
-        if "wood" in id:
-            object_surface.blit(obj_render_images.wood_wall, block)
-        elif "marble" in id:
-            object_surface.blit(obj_render_images.marble_wall, block)
-    elif "power_station" in id:
-        object_surface.blit(obj_render_images.power_station, block)
-        print "blit_[power"
-    elif "nails" in id:
-        object_surface.blit(obj_render_images.nails, block)
-    elif "meatuara_ns" in id:
-        tmp = id.split(" ")
-                    #moving_objects.blit(obj_render_images.meatuara_ns, (objects.handler_output_position[0], objects.handler_output_position[1] + int(tmp[3])))
+    global firstTimeObjectBlit, object_surface_done
+    if firstTimeObjectBlit:
+        global obj_render_images
+        obj_render_images = Objects()
+        firstTimeObjectBlit = False
+    else:
+        if "wire" in id:
+            if "electric" in id:
+                i = objects.get_wire_direction(block)
+                if i == "ns":
+                    object_surface.blit(obj_render_images.wire_electric_insulated_ns, block)
+                elif i == "ew":
+                    object_surface.blit(obj_render_images.wire_electric_insulated_ew, block)
+                elif i == "es":
+                    object_surface.blit(obj_render_images.wire_electric_insulated_es, block)
+                elif i == "ne":
+                    object_surface.blit(obj_render_images.wire_electric_insulated_ne, block)
+                elif i == "nw":
+                    object_surface.blit(obj_render_images.wire_electric_insulated_nw, block)
+                elif i == "sw":
+                    object_surface.blit(obj_render_images.wire_electric_insulated_sw, block)
+        elif "door" in id:
+            if "wood" in id:
+                if "ns" in id:
+                    object_surface.blit(obj_render_images.wood_door_base_ns, block)
+                    if not block in objects.open_doors:
+                        object_surface.blit(obj_render_images.wood_door_ns, block)
+                elif "ew" in id:
+                    object_surface.blit(obj_render_images.wood_door_base_ew, block)
+                    if not block in objects.open_doors:
+                        object_surface.blit(obj_render_images.wood_door_ew, block)
+        elif "wall" in id:
+            if "wood" in id:
+                object_surface.blit(obj_render_images.wood_wall, block)
+            elif "marble" in id:
+                object_surface.blit(obj_render_images.marble_wall, block)
+        elif "power_station" in id:
+            object_surface.blit(obj_render_images.power_station, block)
+        elif "nails" in id:
+            object_surface.blit(obj_render_images.nails, block)
+        elif "meatuara_ns" in id:
+            tmp = id.split(" ")
+            object_surface.blit(obj_render_images.meatuara_ns, (block[0] + int(tmp[2]), block[1] + int(tmp[3])))
+                        #moving_objects.blit(obj_render_images.meatuara_ns, (objects.handler_output_position[0], objects.handler_output_position[1] + int(tmp[3])))
