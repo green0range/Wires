@@ -19,7 +19,7 @@ screen = (600, 600) # TODO: make launcher /w screen size parameter
 class GameWindow:
     global screen, stop
     step = 0
-    def __init__(self):
+    def __init__(self, mf=""):
         global step
         global screen
         step = 0
@@ -30,7 +30,9 @@ class GameWindow:
         else:
             self.root = display.set_mode(screen, 0, 32)
         self.ma = graphics.MapImports(screen)
-        self.ma.import_map()  # TODO: Map import/file selector
+        if mf != "":
+            self.ma.import_map(m=mf)
+        else: self.ma.import_map(m=mf)
         self.object_images = graphics.Objects()
         self.player = objects.Player()
         self.player_images = graphics.PlayerImg()
@@ -102,8 +104,6 @@ class GameWindow:
         if len(objects.handler_input_all) == objects.map_w * objects.map_h -1:
             self.h.main_loop()
 
-gw = GameWindow()
-
 # handles player, movement, keypresses, etc.
 class GameThread(Thread):
     global gw
@@ -140,9 +140,13 @@ class RenderThread(Thread):
         while True:
             gw.backgroundrenderloop()
 
-
-GameThread()
-ObjectsThread()
-RenderThread()
-while not stop:
-    pass
+def start(s=screen, full=False, mf=""):
+    global gw, screen, fullscreen
+    screen = s
+    fullscreen = full
+    gw = GameWindow(mf=mf)
+    GameThread()
+    ObjectsThread()
+    RenderThread()
+    while not stop:
+        pass
