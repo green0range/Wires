@@ -4,7 +4,9 @@ import objects
 
 tile_w = 0
 tile_h = 0
-screen_size = (800, 600)
+screen_size = (1600, 1000)
+
+script = ""
 
 # This class stores all terrain graphics, accessible via Terrain.<graphicname>
 # When creating a Terrain object, the screen size and tile amount of level must
@@ -60,7 +62,8 @@ class Objects:
             path.join("assets", "objects", "wires", "power_station.png"),
             path.join("assets", "objects", "nails.png"),
             path.join("assets", "objects", "marble_wall.png"),
-            path.join("assets", "objects", "meatuara_ns.png")
+            path.join("assets", "objects", "meatuara_ns.png"),
+            path.join("assets", "objects", "stone_wall.png")
         ]
         export_list = []
         for i in range (0, len(import_list)):
@@ -83,15 +86,16 @@ class Objects:
         self.nails = export_list[12]
         self.marble_wall = export_list[13]
         self.meatuara_ns = export_list[14]
+        self.stone_wall = export_list[15]
         # Clear export list to save space
         export_list = 0
 
 class PlayerImg:
     def __init__(self):
-        self.north = image.load(path.join("assets", "objects", "player", "north.png")).convert_alpha()
-        self.east = image.load(path.join("assets", "objects", "player", "east.png")).convert_alpha()
-        self.south = image.load(path.join("assets", "objects", "player", "south.png")).convert_alpha()
-        self.west = image.load(path.join("assets", "objects", "player", "west.png")).convert_alpha()
+        self.north = transform.scale(image.load(path.join("assets", "objects", "player", "north.png")).convert_alpha(), (int(tile_w*0.5), int(tile_h*0.5)))
+        self.east = transform.scale(image.load(path.join("assets", "objects", "player", "east.png")).convert_alpha(), (int(tile_w*0.5), int(tile_h*0.5)))
+        self.south = transform.scale(image.load(path.join("assets", "objects", "player", "south.png")).convert_alpha(), (int(tile_w*0.5), int(tile_h*0.5)))
+        self.west = transform.scale(image.load(path.join("assets", "objects", "player", "west.png")).convert_alpha(), (int(tile_w*0.5), int(tile_h*0.5)))
 
 
 object_surface = Surface(screen_size)#((objects.map_w, objects.map_h), SRCALPHA) screen_size
@@ -106,7 +110,7 @@ object_surface.fill((255,0,255))
 # value. Objects are passed to the object handle after being read from the map file. Meta data
 # about the map, such as title, author and description can also be gained with the get_info function.
 class MapImports:
-    global object_surface
+    global object_surface, script
     def __init__(self, screen):
         self.screen = screen
         self.background_imagery = Surface(screen)
@@ -115,6 +119,7 @@ class MapImports:
         self.i = 0
         self.i_unlock = True
     def import_map(self, m=(path.join("assets", "maps", "testmap.wrm")), want_meta=False):
+        global script
         try:
             f = open(m, "r")
             f_raw = f.readlines()
@@ -143,15 +148,18 @@ class MapImports:
                 object_point = i
             if f_raw[i] == "!DESCRIPTIONLENGTH:":
                 descriptionlength_point = i
+            if f_raw[i] == "!SCRIPT:":
+                script_point = i
         # Extracts data from beyond start point marker
         try:
             self.map_h = int(f_raw[height_point + 1])
             self.map_w = int(f_raw[width_point + 1])
             area = self.map_h * self.map_w
             self.terrain = []
+            self.objects = []
+            script = f_raw[script_point + 1]
             for i in range(0, area):
                 self.terrain.append(f_raw[terrain_point+1+i])
-            self.objects = []
             for i in range(0, area):
                 self.objects.append(f_raw[object_point+1+i])
             objects.active_objects = self.objects
@@ -199,7 +207,7 @@ class MapImports:
                 objects.handler_input = ((self.x_counter, self.y_counter), self.terrain_counter)
                 obj_tmp_renderer = objects.handler_output
                 self.i +=1
-                if self.i < 100:
+                if self.i < objects.map_w * objects.map_h:
                     objects.handler_input_all.append((self.x_counter, self.y_counter))
                 """if "wire" in obj_tmp_renderer:
                     if "electric" in obj_tmp_renderer:
@@ -239,7 +247,6 @@ class MapImports:
                     tmp = obj_tmp_renderer.split(" ")
                     self.moving_objects.blit(self.obj_render_images.meatuara_ns, (objects.handler_output_position[0], objects.handler_output_position[1] + int(tmp[3])))
         """
-        objects.first_time = False
         self.background_imagery.blit(object_surface, (0,0))
         return self.background_imagery
 
@@ -282,6 +289,8 @@ def prepare_object_blit(id, block):
                 object_surface.blit(obj_render_images.wood_wall, block)
             elif "marble" in id:
                 object_surface.blit(obj_render_images.marble_wall, block)
+            elif "stone" in id:
+                object_surface.blit(obj_render_images.stone_wall, block)
         elif "power_station" in id:
             object_surface.blit(obj_render_images.power_station, block)
         elif "nails" in id:

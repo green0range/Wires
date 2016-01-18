@@ -10,7 +10,7 @@ def story():
 def fs():
     initdir = os.path.join("assets", "maps")
     file = tkFileDialog.askopenfilename(initialdir=initdir, filetypes=[('Wires Map', '.wrm'), ('Wires Map Pack (Zipped)', '.zip')])
-    root.start(s=(1000, 1000), full=True, mf=file)
+    root.start(mf=file)
 
 w = Tkinter.Tk()
 btn_story = Tkinter.Button(w, text="Story Mode", command=story).pack()

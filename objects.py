@@ -91,7 +91,7 @@ class Handler:
                 tmp = False
         return tmp
     def main_loop(self):
-        global solid, open_doors, request, response, handler_output, handler_output_position
+        global solid, open_doors, request, response, handler_output, handler_output_position, first_time
         graphics.object_surface.fill((255,0,255))
         for j in range(0, len(handler_input_all)):
             block = handler_input_all[j]
@@ -145,9 +145,10 @@ class Handler:
                 if "wall" in active_objects[counter]:
                     if not (block, counter) in solid:
                         solid.append((block, counter))
-                if "wire" in active_objects[counter]:
-                    # TODO: Wire stuff
-                    pass
+            # === END OF FIRST TIME === #
+            if "wire" in active_objects[counter]:
+                # TODO: Wire stuff
+                pass
             if "nails" in active_objects[counter]:
                 if request == "answered":
                     request = ""
@@ -156,6 +157,7 @@ class Handler:
                 else:
                     request = "posxy"
             graphics.prepare_object_blit(active_objects[counter], block)
+        first_time = False
 
 class Player:
     global solid, tile_w, tile_h

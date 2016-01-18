@@ -3,8 +3,8 @@
 # lib imports
 from pygame import *
 from threading import Thread
-import sys
-
+import os
+import shutil
 # other py's import
 import graphics
 import objects
@@ -14,7 +14,7 @@ init()
 fullscreen = False
 render_update_rate = 10
 stop = False
-screen = (600, 600) # TODO: make launcher /w screen size parameter
+screen = (1600, 1000) # TODO: make launcher /w screen size parameter
 
 class GameWindow:
     global screen, stop
@@ -140,6 +140,30 @@ class RenderThread(Thread):
         while True:
             gw.backgroundrenderloop()
 
+class Scripts(Thread):
+    def __init__(self, path):
+        self.path = path
+        Thread.__init__(self)
+        self.daemon = True
+        self.start()
+    def run(self):
+        first = True
+        while True:
+            if first:
+                if graphics.script !="":
+                    i = self.path.split("\\")
+                    e = self.path.split("/")
+                    if len(e) > len(i):
+                        e.pop()
+                        shutil.copyfile(os.path.join("/".join(e), graphics.script), "map_script.py")
+                    else:
+                        i.pop() # TODO: TEST ON WINDOWS
+                        os.rename(os.path.join("".join(i), graphics.script), "map_script.py")
+                    import map_script
+                    first = False
+
+
+
 def start(s=screen, full=False, mf=""):
     global gw, screen, fullscreen
     screen = s
@@ -148,5 +172,6 @@ def start(s=screen, full=False, mf=""):
     GameThread()
     ObjectsThread()
     RenderThread()
+    Scripts(mf)
     while not stop:
         pass
