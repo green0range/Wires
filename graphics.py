@@ -4,7 +4,7 @@ import objects
 
 tile_w = 0
 tile_h = 0
-screen_size = (1600, 1000)
+screen_size = (1200, 750)
 
 script = ""
 
@@ -96,7 +96,8 @@ class PlayerImg:
         self.east = transform.scale(image.load(path.join("assets", "objects", "player", "east.png")).convert_alpha(), (int(tile_w*0.5), int(tile_h*0.5)))
         self.south = transform.scale(image.load(path.join("assets", "objects", "player", "south.png")).convert_alpha(), (int(tile_w*0.5), int(tile_h*0.5)))
         self.west = transform.scale(image.load(path.join("assets", "objects", "player", "west.png")).convert_alpha(), (int(tile_w*0.5), int(tile_h*0.5)))
-
+    def get_size(self):
+        return int(tile_w*0.5), int(tile_h*0.5)
 
 object_surface = Surface(screen_size)#((objects.map_w, objects.map_h), SRCALPHA) screen_size
 object_surface.set_colorkey((255,0,255))

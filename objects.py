@@ -92,7 +92,7 @@ class Handler:
         return tmp
     def main_loop(self):
         global solid, open_doors, request, response, handler_output, handler_output_position, first_time
-        graphics.object_surface.fill((255,0,255))
+        #graphics.object_surface.fill((255,0,255))
         for j in range(0, len(handler_input_all)):
             block = handler_input_all[j]
             counter = j
@@ -121,6 +121,7 @@ class Handler:
                                 tmp.append(solid[i])
                         solid = tmp
             if "meatuara_ns" in active_objects[counter]:
+                graphics.object_surface.fill((255,0,255))
                 tmp = active_objects[counter].split(" ")
                 tmp[1] = int(tmp[1])
                 tmp[2] = int(tmp[2])
@@ -165,6 +166,9 @@ class Player:
         # TODO: Start positions
         self.x = 500
         self.y = 200
+        i = graphics.PlayerImg()
+        self.width = i.get_size()[0]
+        self.height = i.get_size()[1]
         self.current = "north"
         self.items = Player_items()
     def check_collisions(self, pos):
@@ -182,8 +186,8 @@ class Player:
                 print solid'''
         tmp = True
         for i in range(0, len(solid)):
-            if (pos[1] + 32) > solid[i][0][1] and pos[1] < (solid[i][0][1] + tile_h):
-                if (pos[0] + 32) > solid[i][0][0] and pos[0] < (solid[i][0][0] + tile_w):
+            if (pos[1] + self.width) > solid[i][0][1] and pos[1] < (solid[i][0][1] + tile_h):
+                if (pos[0] + self.height) > solid[i][0][0] and pos[0] < (solid[i][0][0] + tile_w):
                     tmp = False
         return tmp
     def move(self, keys):
@@ -192,19 +196,15 @@ class Player:
         if keys[K_w] or keys[K_UP]:
             if self.check_collisions((self.x, self.y-1)):
                 self.y -= 1
-                sleep(0.0008)
         if keys[K_s] or keys[K_DOWN]:
             if self.check_collisions((self.x, self.y+1)):
                 self.y += 1
-                sleep(0.0008)
         if keys[K_a] or keys[K_LEFT]:
             if self.check_collisions((self.x-1, self.y)):
                 self.x -= 1
-                sleep(0.0008)
         if keys[K_d] or keys[K_RIGHT]:
             if self.check_collisions((self.x+1, self.y)):
                 self.x += 1
-                sleep(0.0008)
         if keys[K_e]:
             if "none" in active_objects[detect_item((self.x, self.y))]:
                 if self.items.wires > 0:

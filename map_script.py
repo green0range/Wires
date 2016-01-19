@@ -1,6 +1,7 @@
-import pygame
+import pygame, os
 
-print "dsfsdf"
-snd_welcome = pygame.mixer.Sound("/home/william/Music/goatfirst.ogg")
-snd_welcome.play()
-first = False
+rootdir = ""
+
+def init():
+    snd_welcome = pygame.mixer.Sound(os.path.join(rootdir, "1.welcome.door_power.mp3"))
+    snd_welcome.play()

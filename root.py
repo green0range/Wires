@@ -14,7 +14,7 @@ init()
 fullscreen = False
 render_update_rate = 10
 stop = False
-screen = (1600, 1000) # TODO: make launcher /w screen size parameter
+screen = (1200, 750) # TODO: make launcher /w screen size parameter
 
 class GameWindow:
     global screen, stop
@@ -105,25 +105,29 @@ class GameWindow:
             self.h.main_loop()
 
 # handles player, movement, keypresses, etc.
+game_timer = time.Clock()
 class GameThread(Thread):
-    global gw
+    global gw, game_timer
     def __init__(self):
         Thread.__init__(self)
         self.daemon = True
         self.start()
     def run(self):
-        global gw
+        global gw, game_timer
         while True:
             gw.mainloop()
+            game_timer.tick(50)
 
 object_timer = time.Clock()
 
 class ObjectsThread(Thread):
+    global object_timer
     def __init__(self):
         Thread.__init__(self)
         self.daemon = True
         self.start()
     def run(self):
+        global object_timer
         while True:
             gw.objectsloop()
             object_timer.tick(100)
@@ -156,10 +160,14 @@ class Scripts(Thread):
                     if len(e) > len(i):
                         e.pop()
                         shutil.copyfile(os.path.join("/".join(e), graphics.script), "map_script.py")
+                        import map_script
+                        map_script.rootdir = "/".join(e)
                     else:
                         i.pop() # TODO: TEST ON WINDOWS
                         os.rename(os.path.join("".join(i), graphics.script), "map_script.py")
-                    import map_script
+                        import map_script
+                        map_script.rootdir = "".join(i)
+                    map_script.init()
                     first = False
 
 
