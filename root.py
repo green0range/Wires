@@ -61,17 +61,22 @@ class GameWindow:
 
     def mainloop(self):
         global stop
-        while True:
-            # Quit events
-            for e in event.get():
-                if e.type == QUIT:
+        # Quit events
+        for e in event.get():
+            if e.type == QUIT:
+                quit()
+                stop = True
+            if e.type == KEYDOWN:
+                if e.key == K_ESCAPE:
                     quit()
                     stop = True
-                if e.type == KEYDOWN:
-                    if e.key == K_ESCAPE:
-                        quit()
-                        stop = True
-            self.player.move(key.get_pressed())
+        self.player.move(key.get_pressed())
+        if objects.player_request != "":
+            if "location_update" in objects.player_request:
+                i = objects.player_request.split(" ")
+                self.player.x = int(i[1])
+                self.player.y = int(i[2])
+                objects.player_request = ""
 
     def backgroundrenderloop(self):
         global step
@@ -116,7 +121,6 @@ class GameThread(Thread):
         global gw, game_timer
         while True:
             gw.mainloop()
-            game_timer.tick(50)
 
 object_timer = time.Clock()
 

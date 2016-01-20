@@ -15,6 +15,8 @@ active_objects = []  # this includes placed objects, Handler's self.objects MUST
 
 solid = []
 
+player_position = (0,0)
+
 request = "" # used to get player data without having access to the player object (which is in root)
 response = ""
 
@@ -120,7 +122,7 @@ class Handler:
                             else:
                                 tmp.append(solid[i])
                         solid = tmp
-            if "meatuara_ns" in active_objects[counter]:
+            if "mea   tuara_ns" in active_objects[counter]:
                 graphics.object_surface.fill((255,0,255))
                 tmp = active_objects[counter].split(" ")
                 tmp[1] = int(tmp[1])
@@ -160,8 +162,14 @@ class Handler:
             graphics.prepare_object_blit(active_objects[counter], block)
         first_time = False
 
+player_request = ""
+
+def update_player_location(new):
+    global player_request, tile_w, tile_h
+    player_request = "location_update " + str(new[0]*tile_h) + " " + str(new[1]*tile_w)
+
 class Player:
-    global solid, tile_w, tile_h
+    global solid, tile_w, tile_h, player_position
     def __init__(self):
         # TODO: Start positions
         self.x = 500
@@ -169,6 +177,7 @@ class Player:
         i = graphics.PlayerImg()
         self.width = i.get_size()[0]
         self.height = i.get_size()[1]
+        i = 0
         self.current = "north"
         self.items = Player_items()
     def check_collisions(self, pos):
@@ -191,34 +200,41 @@ class Player:
                     tmp = False
         return tmp
     def move(self, keys):
-        global solid, tile_w, tile_h, request, response
+        global solid, tile_w, tile_h, request, response, player_position
         cant_move = False
         if keys[K_w] or keys[K_UP]:
             if self.check_collisions((self.x, self.y-1)):
                 self.y -= 1
+                sleep(0.001)
         if keys[K_s] or keys[K_DOWN]:
             if self.check_collisions((self.x, self.y+1)):
                 self.y += 1
+                sleep(0.001)
         if keys[K_a] or keys[K_LEFT]:
             if self.check_collisions((self.x-1, self.y)):
                 self.x -= 1
+                sleep(0.001)
         if keys[K_d] or keys[K_RIGHT]:
             if self.check_collisions((self.x+1, self.y)):
                 self.x += 1
+                sleep(0.001)
         if keys[K_e]:
             if "none" in active_objects[detect_item((self.x, self.y))]:
                 if self.items.wires > 0:
                     if create_wire((self.x, self.y)):
                         self.items.wires -=1
+                        graphics.object_surface.fill((255,0,255))
                         sleep(0.3)
             elif "wire" in active_objects[detect_item((self.x, self.y))]:
                 if remove_wire((self.x, self.y)):
                     self.items.wires +=1
+                    graphics.object_surface.fill((255,0,255))
                 sleep(0.3)
         if request == "posxy":
             response = (self.x, self.y)
             request = "answered"
     def render(self):
+        player_position = (self.x, self.y)
         return self.current, (self.x, self.y)
 
 def get_wire_direction(position):
