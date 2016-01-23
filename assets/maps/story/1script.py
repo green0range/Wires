@@ -1,5 +1,5 @@
 import pygame, os
-import objects
+import objects, root
 
 rootdir = ""
 
@@ -10,10 +10,10 @@ def init():
     main()
 
 def main():
-    while True:
-        p = objects.player_position_request()
-        print p
-        if (p[0] + objects.tile_w) > 39*objects.tile_w and p[0] < (39*objects.tile_w + objects.tile_w):
-            print "x"
-            if (p[1] + objects.tile_h) > (39*objects.tile_w) and p[1] < (39*objects.tile_h + objects.tile_h):
-                print "level completed"
+    go = True
+    while go:
+        p = objects.player_position
+        if (p[0] + objects.tile_w) > 40*objects.tile_w and p[0] < (40*objects.tile_w + objects.tile_w):
+            if (p[1] + objects.tile_h) > (20*objects.tile_w) and p[1] < (20*objects.tile_h + objects.tile_h):
+                root.next_level()
+                go = False

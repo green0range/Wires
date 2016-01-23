@@ -120,6 +120,8 @@ class MapImports:
         self.i = 0
         self.i_unlock = True
     def import_map(self, m=(path.join("assets", "maps", "testmap.wrm")), want_meta=False):
+        print "IMPORTING:"
+        print m
         global script
         try:
             f = open(m, "r")
@@ -186,8 +188,8 @@ class MapImports:
         # Terrain rendering starts at top left tile then left -> right -> Next line repeat. Until all is rendered.
         # This relies on being constantly repeated in another function. It forwards all object render data from
         # the object controller. Yeah, it's pass the parcel in here.
-        restart = False
-        while not restart:
+        self.restart = False
+        while not self.restart:
             self.terrain_counter += 1
             self.x_counter += (self.screen[0]/self.map_w)
             if self.x_counter >= self.screen[0]-3:
@@ -197,8 +199,8 @@ class MapImports:
                 self.x_counter = -(self.screen[0]/self.map_w)
                 self.y_counter = 0
                 self.terrain_counter = -1
-                restart = True
-            if not restart:
+                self.restart = True
+            if not self.restart:
                 if self.terrain[self.terrain_counter] == "wood_floor":
                     self.background_imagery.blit(self.t.wood_floor, (self.x_counter, self.y_counter))
                 elif self.terrain[self.terrain_counter] == "marble_floor":

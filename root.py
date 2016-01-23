@@ -8,6 +8,7 @@ import shutil
 # other py's import
 import graphics
 import objects
+from time import sleep
 
 init()
 
@@ -30,9 +31,7 @@ class GameWindow:
         else:
             self.root = display.set_mode(screen, 0, 32)
         self.ma = graphics.MapImports(screen)
-        if mf != "":
-            self.ma.import_map(m=mf)
-        else: self.ma.import_map(m=mf)
+        self.ma.import_map(m=mf)
         self.object_images = graphics.Objects()
         self.player = objects.Player()
         self.player_images = graphics.PlayerImg()
@@ -80,40 +79,62 @@ class GameWindow:
 
     def backgroundrenderloop(self):
         global step
-        while True:
-            # Map rendering
-            self.root.blit(self.ma.render(), (0,0))
+        # Map rendering
+        self.root.blit(self.ma.render(), (0,0))
 
-            #graphics.object_surface
+        #graphics.object_surface
 
-            player_img_dat = self.player.render()
-            img = self.select_player_images((player_img_dat[0]))
-            self.root.blit(img, player_img_dat[1])
-            display.flip()
-            '''# Display updates
-            if step > 1000:
-                step = 0
-            else: # quality/ frame rate/ lag control
-                rur = int(1000/render_update_rate)
-                doupdate = False
-                for i in range(0, 1000, rur): # updates on variable step percentage.
-                    if i == step:
-                        doupdate = True
-                        break
-                    else:
-                        doupdate = False
-                if doupdate:
-                    display.flip()'''
+        player_img_dat = self.player.render()
+        img = self.select_player_images((player_img_dat[0]))
+        self.root.blit(img, player_img_dat[1])
+        display.flip()
 
     def objectsloop(self):
         if len(objects.handler_input_all) == objects.map_w * objects.map_h -1:
             self.h.main_loop()
 
+level_count = 0
+level_order = []
+level_current = 0
+level_gotonext = False
+
+def next_level():
+    global stop, level_current, level_order, level_gotonext
+    level_current += 1
+    if level_current > level_count:
+        print "level complete. No next level. Quiting..."
+        print level_current
+        print level_order
+        stop = True
+    else:
+        stop = True
+        level_gotonext = True
+
+def import_pack(path):
+    global level_count, level_order
+    import zipfile
+    zf = zipfile.ZipFile(path, "r")
+    zf.extractall(os.path.join("assets", "maps", "working_map"))
+    zf.close()
+    f = open(os.path.join("assets", "maps", "working_map", "wiresconfig"), "r")
+    config_raw = f.read()
+    f.close()
+    config = config_raw.split("\n")
+    for i in range(0, len(config)):
+        if config[i] == '!LEVELNUMBER:':
+            level_count = int(config[i+1])
+        elif config[i] == "!ORDER:":
+            print "dfgdfg"
+            for j in range(i+1, i+1+level_count):
+                level_order.append(config[j])
+                print level_order
+
 # handles player, movement, keypresses, etc.
 game_timer = time.Clock()
 class GameThread(Thread):
-    global gw, game_timer
+    global gw, game_timer, stop
     def __init__(self):
+        print "start main thread"
         Thread.__init__(self)
         self.daemon = True
         self.start()
@@ -125,30 +146,34 @@ class GameThread(Thread):
 object_timer = time.Clock()
 
 class ObjectsThread(Thread):
-    global object_timer
+    global object_timer, stop
     def __init__(self):
+        print "start object thread"
+        objects.first_time = True
         Thread.__init__(self)
         self.daemon = True
         self.start()
     def run(self):
         global object_timer
-        while True:
+        while not stop:
             gw.objectsloop()
             object_timer.tick(100)
 
 # Renders everything
 class RenderThread(Thread):
-    global gw
+    global gw, stop
     def __init__(self):
+        print "start render thread"
         Thread.__init__(self)
         self.daemon = True
         self.start()
     def run(self):
         global gw
-        while True:
+        while not stop:
             gw.backgroundrenderloop()
 
 class Scripts(Thread):
+    global stop
     def __init__(self, path):
         self.path = path
         Thread.__init__(self)
@@ -156,7 +181,7 @@ class Scripts(Thread):
         self.start()
     def run(self):
         first = True
-        while True:
+        while not stop:
             if first:
                 if graphics.script !="":
                     i = self.path.split("\\")
@@ -177,7 +202,7 @@ class Scripts(Thread):
 
 
 def start(s=screen, full=False, mf=""):
-    global gw, screen, fullscreen
+    global gw, screen, fullscreen, stop, level_gotonext, level_order, level_current
     screen = s
     fullscreen = full
     gw = GameWindow(mf=mf)
@@ -185,5 +210,21 @@ def start(s=screen, full=False, mf=""):
     ObjectsThread()
     RenderThread()
     Scripts(mf)
-    while not stop:
-        pass
+    close = False
+    i=0
+    while not close:
+        if stop:
+            i +=1
+            if i > 100: # Delays the shut down of gw, letting rendering threads shutdown properly without crashing.
+                if level_gotonext:
+                    graphics.script = ""
+                    gw.ma.import_map(m=os.path.join("assets", "maps", "working_map", level_order[level_current]))
+                    level_gotonext = False
+                    stop = False
+                    objects.solid = []
+                    ObjectsThread()
+                    RenderThread()
+                    objects.update_player_location((1,1))
+                    Scripts(os.path.join("assets", "maps", "working_map", level_order[level_current]))
+                else:
+                    close = True

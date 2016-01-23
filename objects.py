@@ -15,7 +15,7 @@ active_objects = []  # this includes placed objects, Handler's self.objects MUST
 
 solid = []
 
-player_position = (0,0)
+player_position = []
 
 request = "" # used to get player data without having access to the player object (which is in root)
 response = ""
@@ -94,8 +94,9 @@ class Handler:
         return tmp
     def main_loop(self):
         global solid, open_doors, request, response, handler_output, handler_output_position, first_time
-        #graphics.object_surface.fill((255,0,255))
-        for j in range(0, len(handler_input_all)):
+        obj_loop_start = 0
+        obj_loop_end = len(handler_input_all)
+        for j in range(obj_loop_start, obj_loop_end):
             block = handler_input_all[j]
             counter = j
             if "door" in active_objects[counter]:
@@ -122,7 +123,7 @@ class Handler:
                             else:
                                 tmp.append(solid[i])
                         solid = tmp
-            if "mea   tuara_ns" in active_objects[counter]:
+            if "meatuara_ns" in active_objects[counter]:
                 graphics.object_surface.fill((255,0,255))
                 tmp = active_objects[counter].split(" ")
                 tmp[1] = int(tmp[1])
@@ -145,10 +146,13 @@ class Handler:
                     request = "posxy"
             # Put objects that only need be loaded once here
             if first_time:
+                graphics.object_surface.fill((255,0,255))
                 if "wall" in active_objects[counter]:
                     if not (block, counter) in solid:
                         solid.append((block, counter))
             # === END OF FIRST TIME === #
+            else: # Limit updates to blocks surrounding player.
+                '''********************************************************** '''
             if "wire" in active_objects[counter]:
                 # TODO: Wire stuff
                 pass
@@ -234,6 +238,7 @@ class Player:
             response = (self.x, self.y)
             request = "answered"
     def render(self):
+        global player_position
         player_position = (self.x, self.y)
         return self.current, (self.x, self.y)
 

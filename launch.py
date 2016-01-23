@@ -4,7 +4,8 @@ import tkFileDialog
 import os
 
 def story():
-    story_path = os.path.join("assets", "maps", "story", "1.wrm")
+    story_path = os.path.join("assets", "maps", "working_map", "1.wrm") # TODO: change back to story after testing
+    root.import_pack("/home/william/Documents/Wires/repo/wires/assets/maps/story.zip")
     root.start(mf=story_path)#(s=(1000, 1000), full=True)
     w.destroy()
 
