@@ -173,7 +173,7 @@ class RenderThread(Thread):
             gw.backgroundrenderloop()
 
 class Scripts(Thread):
-    global stop
+    global stop, level_count
     def __init__(self, path):
         self.path = path
         Thread.__init__(self)
@@ -190,11 +190,15 @@ class Scripts(Thread):
                         e.pop()
                         shutil.copyfile(os.path.join("/".join(e), graphics.script), "map_script.py")
                         import map_script
+                        if level_current != 0:
+                            reload(map_script)
                         map_script.rootdir = "/".join(e)
                     else:
                         i.pop() # TODO: TEST ON WINDOWS
                         os.rename(os.path.join("".join(i), graphics.script), "map_script.py")
                         import map_script
+                        if level_current != 0:
+                            reload(map_script)
                         map_script.rootdir = "".join(i)
                     map_script.init()
                     first = False

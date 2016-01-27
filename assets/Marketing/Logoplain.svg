@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   version="1.1"
+   id="svg2"
+   viewBox="0 0 744.09448819 1052.3622047"
+   height="297mm"
+   width="210mm">
+  <defs
+     id="defs4" />
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     id="layer1">
+    <path
+       id="path4178"
+       d="M 140.28076,316.49683 C 153.86294,139.55093 32.494255,160.19346 30.553944,156.58231"
+       style="fill:none;fill-rule:evenodd;stroke:#20c1ff;stroke-width:10.62992096;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+    <path
+       id="path4180"
+       d="M 26.227153,157.50978 C 86.89561,157.19059 110.27,71.598967 110.27,71.598967"
+       style="fill:none;fill-rule:evenodd;stroke:#20c1ff;stroke-width:10.62992126;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none" />
+    <path
+       id="path4182"
+       d="m 140.35225,316.93519 c 0.71664,-271.277087 113.01917,-97.1227 113.01917,-97.1227"
+       style="fill:none;fill-rule:evenodd;stroke:#20c1ff;stroke-width:13.3550148;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#c87137;stroke-width:10.62992096;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="M 160.04464,318.54543 C 174.68243,146.53577 44.045749,187.77609 26.213439,176.39508"
+       id="path5644" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#c87137;stroke-width:10.62992096;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="M 23.782158,177.70871 C 92.050302,177.37286 133.97772,71.297951 133.97772,71.297951"
+       id="path5646" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#c87137;stroke-width:13.00107956;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 160.85053,318.51358 c 0.63095,-243.061907 83.69729,-66.18369 83.69729,-66.18369"
+       id="path5648" />
+    <text
+       transform="scale(0.750532,1.3323882)"
+       id="text5662"
+       y="219.56013"
+       x="349.45477"
+       style="font-style:normal;font-weight:normal;font-size:241.85906982px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       xml:space="preserve"><tspan
+         style="-inkscape-font-specification:'Aa_Randhoo P, Normal';font-family:'Aa_Randhoo P';font-weight:normal;font-style:normal;font-stretch:normal;font-variant:normal;font-size:241.86250923px;text-anchor:start;text-align:start;writing-mode:lr;line-height:125%"
+         y="219.56013"
+         x="349.45477"
+         id="tspan5664">/IRES</tspan></text>
+  </g>
+</svg>

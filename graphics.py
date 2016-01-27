@@ -63,7 +63,8 @@ class Objects:
             path.join("assets", "objects", "nails.png"),
             path.join("assets", "objects", "marble_wall.png"),
             path.join("assets", "objects", "meatuara_ns.png"),
-            path.join("assets", "objects", "stone_wall.png")
+            path.join("assets", "objects", "stone_wall.png"),
+            path.join("assets", "objects", "wood_box.png")
         ]
         export_list = []
         for i in range (0, len(import_list)):
@@ -87,6 +88,7 @@ class Objects:
         self.marble_wall = export_list[13]
         self.meatuara_ns = export_list[14]
         self.stone_wall = export_list[15]
+        self.wood_box = export_list[16]
         # Clear export list to save space
         export_list = 0
 
@@ -241,7 +243,7 @@ class MapImports:
                     if "wood" in obj_tmp_renderer:
                         self.background_imagery.blit(self.obj_render_images.wood_wall, (objects.handler_output_position[0], objects.handler_output_position[1]))
                     elif "marble" in obj_tmp_renderer:
-                        self.background_imagery.blit(self.obj_render_images.marble_wall, (objects.handler_output_position[0], objects.handler_output_position[1]))
+                        self.background_imagery.blit(self.obj_render_:images.marble_wall, (objects.handler_output_position[0], objects.handler_output_position[1]))
                 elif "power_station" in obj_tmp_renderer:
                     self.background_imagery.blit(self.obj_render_images.power_station, (objects.handler_output_position[0], objects.handler_output_position[1]))
                 elif "nails" in obj_tmp_renderer:
@@ -298,6 +300,10 @@ def prepare_object_blit(id, block):
             object_surface.blit(obj_render_images.power_station, block)
         elif "nails" in id:
             object_surface.blit(obj_render_images.nails, block)
+        elif "box" in id:
+            if "wood" in id:
+                tmp = id.split(" ")
+                object_surface.blit(obj_render_images.wood_box, (block[0] + int(tmp[1]), block[1] + int(tmp[2])))
         elif "meatuara_ns" in id:
             tmp = id.split(" ")
             object_surface.blit(obj_render_images.meatuara_ns, (block[0] + int(tmp[2]), block[1] + int(tmp[3])))

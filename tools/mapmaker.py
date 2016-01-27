@@ -50,7 +50,7 @@ class New:
         descript_list = descript.split("\n")
         descript_line_count = len(descript_list)
         metadata += "!TITLE:\n" + self.ent_title.get() + "\n"
-        metadata += "!DESCRuntimeError: Too early to create imageRIPTION:\n" + descript + "\n"
+        metadata += "!DESCRIPTION:\n" + descript + "\n"
         metadata += "!DESCRIPTIONLENGTH:\n" + str(descript_line_count) + "\n"
         metadata += "!AUTHOR:\n" + self.ent_author.get() + "\n"
         metadata += "!DATESTAMP:\n" + str(time.time()) + "\n" # Unix time

@@ -93,9 +93,10 @@ class Handler:
                 tmp = False
         return tmp
     def main_loop(self):
-        global solid, open_doors, request, response, handler_output, handler_output_position, first_time
+        global solid, open_doors, request, response, handler_output, handler_output_position, first_time, obj_loop_end, obj_loop_start
         obj_loop_start = 0
         obj_loop_end = len(handler_input_all)
+        box_solid_position = len(solid)
         for j in range(obj_loop_start, obj_loop_end):
             block = handler_input_all[j]
             counter = j
@@ -153,9 +154,29 @@ class Handler:
             # === END OF FIRST TIME === #
             else: # Limit updates to blocks surrounding player.
                 '''********************************************************** '''
+                start = (int(player_position[0]/tile_h)-1, int(player_position[1]/tile_w)-1)
+                end = (int(player_position[0]/tile_h)+1, int(player_position[1]/tile_w)+1)
+                obj_loop_start = (start[1]*map_w)+start[0]
+                obj_loop_end = (end[1]*map_w)+end[0]
             if "wire" in active_objects[counter]:
                 # TODO: Wire stuff
                 pass
+            if "box" in active_objects[counter]:
+                tmp = active_objects[counter].split(" ")
+                if block[0] + int(tmp[1]) - 1 <= player_position[0] + player_size[0] and block[0] + int(tmp[1]) + 1 >= player_position[0] + player_size[0]:
+                    if block[1] + int(tmp[2]) <= player_position[1] + player_size[1] and block[1] + int(tmp[2]) + tile_h >= player_position[1] + player_size[1]:
+                        for i in range(0, len(solid)):
+                            if solid[i] == ((block[0] + int(tmp[1]), block[1] + int(tmp[2])), counter):
+                                solid.pop(i)
+                        solid.append(((block[0] + int(tmp[1])+3, block[1] + int(tmp[2])), counter))
+                        active_objects[counter] = tmp[0] + " " + str(int(tmp[1])+3) + " " + tmp[2]
+                if block[0] + int(tmp[1]) + tile_w -1 <= player_position[0] and block[0] + int(tmp[1]) + tile_w + 1 >= player_position[0]:
+                    if block[1] + int(tmp[2]) <= player_position[1] + player_size[1] and block[1] + int(tmp[2]) + tile_h >= player_position[1] + player_size[1]:
+                        for i in range(0, len(solid)):
+                            if solid[i] == ((block[0] + int(tmp[1]), block[1] + int(tmp[2])), counter):
+                                solid.pop(i)
+                        solid.append(((block[0] + int(tmp[1])-3, block[1] + int(tmp[2])), counter))
+                        active_objects[counter] = tmp[0] + " " + str(int(tmp[1])-3) + " " + tmp[2]
             if "nails" in active_objects[counter]:
                 if request == "answered":
                     request = ""
@@ -173,14 +194,16 @@ def update_player_location(new):
     player_request = "location_update " + str(new[0]*tile_h) + " " + str(new[1]*tile_w)
 
 class Player:
-    global solid, tile_w, tile_h, player_position
+    global solid, tile_w, tile_h, player_position, player_size
     def __init__(self):
+        global player_size
         # TODO: Start positions
         self.x = 500
         self.y = 200
         i = graphics.PlayerImg()
         self.width = i.get_size()[0]
         self.height = i.get_size()[1]
+        player_size = (self.width, self.height)
         i = 0
         self.current = "north"
         self.items = Player_items()
