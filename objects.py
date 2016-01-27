@@ -163,6 +163,7 @@ class Handler:
                 pass
             if "box" in active_objects[counter]:
                 tmp = active_objects[counter].split(" ")
+                # push right
                 if block[0] + int(tmp[1]) - 1 <= player_position[0] + player_size[0] and block[0] + int(tmp[1]) + 1 >= player_position[0] + player_size[0]:
                     if block[1] + int(tmp[2]) <= player_position[1] + player_size[1] and block[1] + int(tmp[2]) + tile_h >= player_position[1] + player_size[1]:
                         for i in range(0, len(solid)):
@@ -170,6 +171,8 @@ class Handler:
                                 solid.pop(i)
                         solid.append(((block[0] + int(tmp[1])+3, block[1] + int(tmp[2])), counter))
                         active_objects[counter] = tmp[0] + " " + str(int(tmp[1])+3) + " " + tmp[2]
+                        graphics.object_surface.fill((255,0,255))
+                # left
                 if block[0] + int(tmp[1]) + tile_w -1 <= player_position[0] and block[0] + int(tmp[1]) + tile_w + 1 >= player_position[0]:
                     if block[1] + int(tmp[2]) <= player_position[1] + player_size[1] and block[1] + int(tmp[2]) + tile_h >= player_position[1] + player_size[1]:
                         for i in range(0, len(solid)):
@@ -177,6 +180,24 @@ class Handler:
                                 solid.pop(i)
                         solid.append(((block[0] + int(tmp[1])-3, block[1] + int(tmp[2])), counter))
                         active_objects[counter] = tmp[0] + " " + str(int(tmp[1])-3) + " " + tmp[2]
+                        graphics.object_surface.fill((255,0,255))
+                # down
+                if block[0] + int(tmp[1]) <= player_position[0] and block[0] + int(tmp[1]) + tile_w >= player_position[0]:
+                    if block[1] + int(tmp[2]) -1 <= player_position[1] + player_size[1] and block[1] + int(tmp[2]) + 1>= player_position[1]:
+                        for i in range(0, len(solid)):
+                            if solid[i] == ((block[0] + int(tmp[1]), block[1] + int(tmp[2])), counter):
+                                solid.pop(i)
+                        solid.append(((block[0] + int(tmp[1]), block[1] + int(tmp[2])+3), counter))
+                        active_objects[counter] = tmp[0] + " " + tmp[1]+ " " + str(int(tmp[2])+3)
+                        graphics.object_surface.fill((255,0,255))
+                    # up
+                    if block[1] + int(tmp[2]) + tile_h -1 <= player_position[1] and block[1] + int(tmp[2]) + tile_h + 1>= player_position[1]:
+                        for i in range(0, len(solid)):
+                            if solid[i] == ((block[0] + int(tmp[1]), block[1] + int(tmp[2])), counter):
+                                solid.pop(i)
+                        solid.append(((block[0] + int(tmp[1]), block[1] + int(tmp[2])-3), counter))
+                        active_objects[counter] = tmp[0] + " " + tmp[1]+ " " + str(int(tmp[2])-3)
+                        graphics.object_surface.fill((255,0,255))
             if "nails" in active_objects[counter]:
                 if request == "answered":
                     request = ""
@@ -222,9 +243,12 @@ class Player:
                 print solid'''
         tmp = True
         for i in range(0, len(solid)):
-            if (pos[1] + self.width) > solid[i][0][1] and pos[1] < (solid[i][0][1] + tile_h):
-                if (pos[0] + self.height) > solid[i][0][0] and pos[0] < (solid[i][0][0] + tile_w):
-                    tmp = False
+            try:
+                if (pos[1] + self.width) > solid[i][0][1] and pos[1] < (solid[i][0][1] + tile_h):
+                    if (pos[0] + self.height) > solid[i][0][0] and pos[0] < (solid[i][0][0] + tile_w):
+                        tmp = False
+            except IndexError:
+                print "Index error in movement solid checker. Did another thread remove a solid?"
         return tmp
     def move(self, keys):
         global solid, tile_w, tile_h, request, response, player_position
