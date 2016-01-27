@@ -52,7 +52,15 @@ def detect_item(position):
     return order
 
 def die():
-    print "you died!"
+    import map_script
+    try:
+        map_script.die()
+    except:
+        print "ERR003. Map Script die() not found/ not functional."
+        print "If you are a map make, please note that you map's scripts need a die() function if harmful objects"
+        print "are included in said map. It is recommended that this reset the map, although i'm keen for any other"
+        print "interesting and/ or unique ideas. ~ William"
+        print "PS. Or just print this message 1000 times per second. Why not?!"
 
 handler_output = Surface((map_w, map_h), SRCALPHA)
 handler_input = []
@@ -60,7 +68,7 @@ handler_output_position = []
 handler_input_all = []
 
 class Handler:
-    global solid, active_objects, open_doors, handler_output, handler_output_position
+    global solid, active_objects, open_doors, handler_output, handler_output_position, nail_list
     def __init__(self):
         global active_objects
         self.graphic = graphics.Objects()
@@ -88,12 +96,12 @@ class Handler:
     def check_collisions(self, pos1, pos2): # Stolen from Player to for nails interaction
         # Pos1 should be player, pos2 should be block size
         tmp = True
-        if (pos1[1] + 32) > pos2[1] and pos1[1] < (pos2[1] + tile_h):
-            if (pos1[0] + 32) > pos2[0] and pos1[0] < (pos2[0] + tile_w):
+        if (pos1[1] + player_size[1]) > pos2[1] and pos1[1] < (pos2[1] + tile_h):
+            if (pos1[0] + player_size[0]) > pos2[0] and pos1[0] < (pos2[0] + tile_w):
                 tmp = False
         return tmp
     def main_loop(self):
-        global solid, open_doors, request, response, handler_output, handler_output_position, first_time, obj_loop_end, obj_loop_start
+        global solid, open_doors, request, response, handler_output, handler_output_position, first_time, obj_loop_end, obj_loop_start, nail_list
         obj_loop_start = 0
         obj_loop_end = len(handler_input_all)
         box_solid_position = len(solid)
@@ -171,6 +179,7 @@ class Handler:
                                 solid.pop(i)
                         solid.append(((block[0] + int(tmp[1])+3, block[1] + int(tmp[2])), counter))
                         active_objects[counter] = tmp[0] + " " + str(int(tmp[1])+3) + " " + tmp[2]
+                        block_wipe_nail((block[0] + int(tmp[1])+3, block[1] + int(tmp[2])))
                         graphics.object_surface.fill((255,0,255))
                 # left
                 if block[0] + int(tmp[1]) + tile_w -1 <= player_position[0] and block[0] + int(tmp[1]) + tile_w + 1 >= player_position[0]:
@@ -180,6 +189,7 @@ class Handler:
                                 solid.pop(i)
                         solid.append(((block[0] + int(tmp[1])-3, block[1] + int(tmp[2])), counter))
                         active_objects[counter] = tmp[0] + " " + str(int(tmp[1])-3) + " " + tmp[2]
+                        block_wipe_nail((block[0] + int(tmp[1])-3, block[1] + int(tmp[2])))
                         graphics.object_surface.fill((255,0,255))
                 # down
                 if block[0] + int(tmp[1]) <= player_position[0] and block[0] + int(tmp[1]) + tile_w >= player_position[0]:
@@ -189,6 +199,7 @@ class Handler:
                                 solid.pop(i)
                         solid.append(((block[0] + int(tmp[1]), block[1] + int(tmp[2])+3), counter))
                         active_objects[counter] = tmp[0] + " " + tmp[1]+ " " + str(int(tmp[2])+3)
+                        block_wipe_nail((block[0] + int(tmp[1]), block[1] + int(tmp[2])+3))
                         graphics.object_surface.fill((255,0,255))
                     # up
                     if block[1] + int(tmp[2]) + tile_h -1 <= player_position[1] and block[1] + int(tmp[2]) + tile_h + 1>= player_position[1]:
@@ -197,16 +208,28 @@ class Handler:
                                 solid.pop(i)
                         solid.append(((block[0] + int(tmp[1]), block[1] + int(tmp[2])-3), counter))
                         active_objects[counter] = tmp[0] + " " + tmp[1]+ " " + str(int(tmp[2])-3)
+                        block_wipe_nail((block[0] + int(tmp[1]), block[1] + int(tmp[2])-3))
                         graphics.object_surface.fill((255,0,255))
             if "nails" in active_objects[counter]:
-                if request == "answered":
-                    request = ""
-                    if not self.check_collisions(response, block):
+                    if not self.check_collisions(player_position, block):
                         die()
-                else:
-                    request = "posxy"
+                    if not block in nail_list:
+                        nail_list.append((block, counter))
             graphics.prepare_object_blit(active_objects[counter], block)
         first_time = False
+
+nail_list = []
+
+def block_wipe_nail(box):
+    try:
+        for i in range(0, len(nail_list)):
+            if box[0] <= nail_list[i][0][0] and box[0] + tile_w >= nail_list[i][0][0]:
+                if box[1] <= nail_list[i][0][1] and box[1] + tile_h >= nail_list[i][0][1]:
+                    active_objects[nail_list[i][1]] = "none"
+                    nail_list.pop(i)
+    except IndexError:
+        pass
+
 
 player_request = ""
 
@@ -315,7 +338,7 @@ def get_wire_direction(position):
 def create_wire(position, type="electric_insulated"):  # TODO: wiretypes
     global active_objects
     order = detect_item(position)
-    if active_objects[order] == "none":
+    if active_objects[order] == "none" or "box" in active_objects[order]:
         active_objects[order] = "electric_insulated_wire_connect"
         return True
     else:
