@@ -72,15 +72,20 @@ class Handler:
     def __init__(self):
         global active_objects
         self.graphic = graphics.Objects()
-    def door_opening_check(self, position):  # FIXME: two wires will trigger door
-        for i in range(0, 100):# Timeout in case break fails
+    def door_opening_check(self, p):  # FIXME: two wires will trigger door
+        position = p
+        for i in range(0, 50):# Timeout in case break fails
             if "power_station" in active_objects[detect_item((position[0]-tile_w, position[1]))]:
+                print 1
                 return True
             elif "power_station" in active_objects[detect_item((position[0]+tile_w, position[1]))]:
+                print 2
                 return True
             elif "power_station" in active_objects[detect_item((position[0], position[1]-tile_h))]:
+                print 3
                 return True
             elif "power_station" in active_objects[detect_item((position[0]-tile_w, position[1]+tile_h))]:
+                print 4
                 return True
             else:
                 if "electric" and "wire" in active_objects[detect_item((position[0]-tile_w, position[1]))]:# left
@@ -93,6 +98,7 @@ class Handler:
                     position = (position[0], position[1]+tile_h)
                 else:
                     return False
+        return False
     def check_collisions(self, pos1, pos2): # Stolen from Player to for nails interaction
         # Pos1 should be player, pos2 should be block size
         tmp = True
