@@ -6,6 +6,7 @@ rootdir = ""
 
 def init():
     objects.update_player_location((1,20))
+    sleep(0.25) # Wait for rest of level to load
     snd_congrats = pygame.mixer.Sound(os.path.join(rootdir, "2.Congratulations.ogg"))
     snd_congrats.set_volume(0.25)
     snd_congrats.play()

@@ -1,7 +1,10 @@
 Warning, Wires configuration file. This handles how levels, within a pack, interconnect.
 !BEGIN:
 !LEVELNUMBER:
-2
+5
 !ORDER:
 1.wrm
 2.wrm
+3.wrm
+4.wrm
+5.wrm

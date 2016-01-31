@@ -1,10 +1,12 @@
 import pygame, os
 import objects, root
+from time import sleep
 
 rootdir = ""
 
 def init():
     objects.update_player_location((2,7))
+    sleep(0.25) # Wait for rest of level to load
     snd_welcome = pygame.mixer.Sound(os.path.join(rootdir, "1.welcome.door_power.ogg"))
     snd_welcome.set_volume(0.25)
     snd_welcome.play()

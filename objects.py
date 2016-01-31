@@ -72,6 +72,7 @@ class Handler:
     def __init__(self):
         global active_objects
         self.graphic = graphics.Objects()
+        self.players_items = player_items_crosslevel
     def door_opening_check(self, p):  # FIXME: two wires will trigger door
         position = p
         for i in range(0, 50):# Timeout in case break fails
@@ -173,8 +174,11 @@ class Handler:
                 obj_loop_start = (start[1]*map_w)+start[0]
                 obj_loop_end = (end[1]*map_w)+end[0]
             if "wire" in active_objects[counter]:
-                # TODO: Wire stuff
-                pass
+                if "electric" in active_objects[counter]:
+                    if "insulated" in active_objects[counter]:
+                        if "refill" in active_objects[counter]:
+                            if self.players_items.wires != 50:
+                                self.players_items.wires = 50
             if "box" in active_objects[counter]:
                 tmp = active_objects[counter].split(" ")
                 # push right
@@ -243,6 +247,8 @@ def update_player_location(new):
     global player_request, tile_w, tile_h
     player_request = "location_update " + str(new[0]*tile_h) + " " + str(new[1]*tile_w)
 
+player_items_crosslevel = Player_items()
+
 class Player:
     global solid, tile_w, tile_h, player_position, player_size
     def __init__(self):
@@ -256,7 +262,7 @@ class Player:
         player_size = (self.width, self.height)
         i = 0
         self.current = "north"
-        self.items = Player_items()
+        self.items = player_items_crosslevel
     def check_collisions(self, pos):
         '''try:
             x = int(pos[0]/tile_w) * tile_w
@@ -299,7 +305,7 @@ class Player:
                 self.x += 1
                 sleep(0.001)
         if keys[K_e]:
-            if "none" in active_objects[detect_item((self.x, self.y))]:
+            if "none" in active_objects[detect_item((self.x, self.y))] or "box" in active_objects[detect_item((self.x, self.y))]:
                 if self.items.wires > 0:
                     if create_wire((self.x, self.y)):
                         self.items.wires -=1
@@ -344,9 +350,11 @@ def get_wire_direction(position):
 def create_wire(position, type="electric_insulated"):  # TODO: wiretypes
     global active_objects
     order = detect_item(position)
-    if active_objects[order] == "none" or "box" in active_objects[order]:
+    if active_objects[order] == "none":
         active_objects[order] = "electric_insulated_wire_connect"
         return True
+    elif "box" in active_objects[order]:
+        active_objects[order] += " electric_insulated_wire_connect"
     else:
         return False  # attempted place on other item
 

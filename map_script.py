@@ -5,7 +5,8 @@ from time import sleep
 rootdir = ""
 
 def init():
-    objects.update_player_location((1,20))
+    objects.update_player_location((1,1))
+    sleep(0.25) # Wait for rest of level to load
     snd_congrats = pygame.mixer.Sound(os.path.join(rootdir, "2.Congratulations.ogg"))
     snd_congrats.set_volume(0.25)
     snd_congrats.play()
@@ -23,3 +24,6 @@ def main():
             if (p[1] + objects.tile_h) > (1*objects.tile_w) and p[1] < (1*objects.tile_h + objects.tile_h):
                 root.next_level()
                 go = False
+
+def die():
+    objects.update_player_location((1,1))

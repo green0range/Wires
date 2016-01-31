@@ -64,7 +64,8 @@ class Objects:
             path.join("assets", "objects", "marble_wall.png"),
             path.join("assets", "objects", "meatuara_ns.png"),
             path.join("assets", "objects", "stone_wall.png"),
-            path.join("assets", "objects", "wood_box.png")
+            path.join("assets", "objects", "wood_box.png"),
+            path.join("assets", "objects", "wire_refill.png")
         ]
         export_list = []
         for i in range (0, len(import_list)):
@@ -89,6 +90,7 @@ class Objects:
         self.meatuara_ns = export_list[14]
         self.stone_wall = export_list[15]
         self.wood_box = export_list[16]
+        self.wire_electric_insulated_refill = export_list[17]
         # Clear export list to save space
         export_list = 0
 
@@ -267,7 +269,9 @@ def prepare_object_blit(id, block):
         if "wire" in id:
             if "electric" in id:
                 i = objects.get_wire_direction(block)
-                if i == "ns":
+                if "refill" in id:
+                    object_surface.blit(obj_render_images.wire_electric_insulated_refill, block)
+                elif i == "ns":
                     object_surface.blit(obj_render_images.wire_electric_insulated_ns, block)
                 elif i == "ew":
                     object_surface.blit(obj_render_images.wire_electric_insulated_ew, block)
@@ -279,6 +283,8 @@ def prepare_object_blit(id, block):
                     object_surface.blit(obj_render_images.wire_electric_insulated_nw, block)
                 elif i == "sw":
                     object_surface.blit(obj_render_images.wire_electric_insulated_sw, block)
+                elif "refill" in id:
+                    object_surface.blit(obj_render_images.wire_electric_insulated_refill, block)
         elif "door" in id:
             if "wood" in id:
                 if "ns" in id:
@@ -300,11 +306,10 @@ def prepare_object_blit(id, block):
             object_surface.blit(obj_render_images.power_station, block)
         elif "nails" in id:
             object_surface.blit(obj_render_images.nails, block)
-        elif "box" in id:
-            if "wood" in id:
-                tmp = id.split(" ")
-                object_surface.blit(obj_render_images.wood_box, (block[0] + int(tmp[1]), block[1] + int(tmp[2])))
         elif "meatuara_ns" in id:
             tmp = id.split(" ")
             object_surface.blit(obj_render_images.meatuara_ns, (block[0] + int(tmp[2]), block[1] + int(tmp[3])))
-                        #moving_objects.blit(obj_render_images.meatuara_ns, (objects.handler_output_position[0], objects.handler_output_position[1] + int(tmp[3])))
+        if "box" in id: # The box block can be occupied by more than one object, so it get an if rather than a elif.
+            if "wood" in id:
+                tmp = id.split(" ")
+                object_surface.blit(obj_render_images.wood_box, (block[0] + int(tmp[1]), block[1] + int(tmp[2])))
