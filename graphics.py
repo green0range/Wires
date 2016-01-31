@@ -65,7 +65,13 @@ class Objects:
             path.join("assets", "objects", "meatuara_ns.png"),
             path.join("assets", "objects", "stone_wall.png"),
             path.join("assets", "objects", "wood_box.png"),
-            path.join("assets", "objects", "wire_refill.png")
+            path.join("assets", "objects", "wire_refill.png"),
+            path.join("assets", "objects", "wires", "wire_electrical_es.png"),
+            path.join("assets", "objects", "wires", "wire_electrical_ew.png"),
+            path.join("assets", "objects", "wires", "wire_electrical_ne.png"),
+            path.join("assets", "objects", "wires", "wire_electrical_ns.png"),
+            path.join("assets", "objects", "wires", "wire_electrical_nw.png"),
+            path.join("assets", "objects", "wires", "wire_electrical_sw.png")
         ]
         export_list = []
         for i in range (0, len(import_list)):
@@ -91,6 +97,12 @@ class Objects:
         self.stone_wall = export_list[15]
         self.wood_box = export_list[16]
         self.wire_electric_insulated_refill = export_list[17]
+        self.wire_electric_es = export_list[18]
+        self.wire_electric_ew = export_list[19]
+        self.wire_electric_ne = export_list[20]
+        self.wire_electric_ns = export_list[21]
+        self.wire_electric_nw = export_list[22]
+        self.wire_electric_sw = export_list[23]
         # Clear export list to save space
         export_list = 0
 
@@ -268,23 +280,35 @@ def prepare_object_blit(id, block):
     else:
         if "wire" in id:
             if "electric" in id:
-                i = objects.get_wire_direction(block)
-                if "refill" in id:
-                    object_surface.blit(obj_render_images.wire_electric_insulated_refill, block)
-                elif i == "ns":
-                    object_surface.blit(obj_render_images.wire_electric_insulated_ns, block)
-                elif i == "ew":
-                    object_surface.blit(obj_render_images.wire_electric_insulated_ew, block)
-                elif i == "es":
-                    object_surface.blit(obj_render_images.wire_electric_insulated_es, block)
-                elif i == "ne":
-                    object_surface.blit(obj_render_images.wire_electric_insulated_ne, block)
-                elif i == "nw":
-                    object_surface.blit(obj_render_images.wire_electric_insulated_nw, block)
-                elif i == "sw":
-                    object_surface.blit(obj_render_images.wire_electric_insulated_sw, block)
-                elif "refill" in id:
-                    object_surface.blit(obj_render_images.wire_electric_insulated_refill, block)
+                if "insulated" in id:
+                    i = objects.get_wire_direction(block)
+                    if "refill" in id:
+                        object_surface.blit(obj_render_images.wire_electric_insulated_refill, block)
+                    elif i == "ns":
+                        object_surface.blit(obj_render_images.wire_electric_insulated_ns, block)
+                    elif i == "ew":
+                        object_surface.blit(obj_render_images.wire_electric_insulated_ew, block)
+                    elif i == "es":
+                        object_surface.blit(obj_render_images.wire_electric_insulated_es, block)
+                    elif i == "ne":
+                        object_surface.blit(obj_render_images.wire_electric_insulated_ne, block)
+                    elif i == "nw":
+                        object_surface.blit(obj_render_images.wire_electric_insulated_nw, block)
+                    elif i == "sw":
+                        object_surface.blit(obj_render_images.wire_electric_insulated_sw, block)
+                else:
+                    if "ns" in id:
+                        object_surface.blit(obj_render_images.wire_electric_ns, block)
+                    elif "ew" in id:
+                        object_surface.blit(obj_render_images.wire_electric_ew, block)
+                    elif "es" in id:
+                        object_surface.blit(obj_render_images.wire_electric_es, block)
+                    elif "ne" in id:
+                        object_surface.blit(obj_render_images.wire_electric_ne, block)
+                    elif "nw" in id:
+                        object_surface.blit(obj_render_images.wire_electric_nw, block)
+                    elif "sw" in id:
+                        object_surface.blit(obj_render_images.wire_electric_sw, block)
         elif "door" in id:
             if "wood" in id:
                 if "ns" in id:

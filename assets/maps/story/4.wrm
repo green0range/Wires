@@ -1069,7 +1069,7 @@ none
 none
 none
 none
-none
+wires_electric_ns_connect
 none
 none
 none
@@ -1089,14 +1089,14 @@ none
 none
 stone_wall
 wood_wall
-none
-none
-none
-none
-none
-none
-none
 wires_refill_electric_insulated
+none
+none
+none
+none
+none
+none
+none
 wood_wall
 stone_wall
 none
@@ -1707,7 +1707,7 @@ none
 none
 none
 none
-none
+meatuara_ns 2 2 0 n
 none
 none
 none

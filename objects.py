@@ -67,34 +67,33 @@ handler_input = []
 handler_output_position = []
 handler_input_all = []
 
+wires_update = False
+
 class Handler:
     global solid, active_objects, open_doors, handler_output, handler_output_position, nail_list
     def __init__(self):
         global active_objects
         self.graphic = graphics.Objects()
         self.players_items = player_items_crosslevel
+        self.door_state = False
     def door_opening_check(self, p):  # FIXME: two wires will trigger door
         position = p
-        for i in range(0, 50):# Timeout in case break fails
+        for i in range(0, 100):# Timeout in case break fails
             if "power_station" in active_objects[detect_item((position[0]-tile_w, position[1]))]:
-                print 1
                 return True
             elif "power_station" in active_objects[detect_item((position[0]+tile_w, position[1]))]:
-                print 2
                 return True
             elif "power_station" in active_objects[detect_item((position[0], position[1]-tile_h))]:
-                print 3
                 return True
             elif "power_station" in active_objects[detect_item((position[0]-tile_w, position[1]+tile_h))]:
-                print 4
                 return True
             else:
                 if "electric" and "wire" in active_objects[detect_item((position[0]-tile_w, position[1]))]:# left
                     position = (position[0]-tile_w, position[1])
-                elif "electric" and "wire" in active_objects[detect_item((position[0]+tile_w, position[1]))]:# right
-                    position = (position[0]+tile_w, position[1])
                 elif "electric" and "wire" in active_objects[detect_item((position[0], position[1]-tile_h))]:# up
                     position = (position[0], position[1]-tile_h)
+                elif "electric" and "wire" in active_objects[detect_item((position[0]+tile_w, position[1]))]:# right
+                    position = (position[0]+tile_w, position[1])
                 elif "electric" and "wire" in active_objects[detect_item((position[0], position[1]+tile_h))]:# down
                     position = (position[0], position[1]+tile_h)
                 else:
@@ -108,7 +107,7 @@ class Handler:
                 tmp = False
         return tmp
     def main_loop(self):
-        global solid, open_doors, request, response, handler_output, handler_output_position, first_time, obj_loop_end, obj_loop_start, nail_list
+        global solid, open_doors, request, response, handler_output, handler_output_position, first_time, obj_loop_end, obj_loop_start, nail_list, wires_update
         obj_loop_start = 0
         obj_loop_end = len(handler_input_all)
         box_solid_position = len(solid)
@@ -116,8 +115,10 @@ class Handler:
             block = handler_input_all[j]
             counter = j
             if "door" in active_objects[counter]:
-                state = self.door_opening_check(block)
-                if state == False:
+                if wires_update:
+                    self.door_state = self.door_opening_check(block)
+                    wires_update = False
+                if self.door_state == False:
                     if not (block, counter) in solid:
                         solid.append((block, counter))
                     if block in open_doors:
@@ -128,7 +129,7 @@ class Handler:
                         else:
                             tmp.append(open_doors[i])
                         open_doors = tmp
-                else: # FIXME: only one door will unlock at a time
+                else:
                     if not block in open_doors:
                         open_doors.append(block)
                     if (block, counter) in solid:
@@ -140,7 +141,7 @@ class Handler:
                                 tmp.append(solid[i])
                         solid = tmp
             if "meatuara_ns" in active_objects[counter]:
-                graphics.object_surface.fill((255,0,255))
+                #graphics.object_surface.fill((255,0,255))
                 tmp = active_objects[counter].split(" ")
                 tmp[1] = int(tmp[1])
                 tmp[2] = int(tmp[2])
@@ -179,6 +180,9 @@ class Handler:
                         if "refill" in active_objects[counter]:
                             if self.players_items.wires != 50:
                                 self.players_items.wires = 50
+                    else:
+                        if not self.check_collisions(player_position, block):
+                            die()
             if "box" in active_objects[counter]:
                 tmp = active_objects[counter].split(" ")
                 # push right
@@ -348,7 +352,8 @@ def get_wire_direction(position):
         return "ns"
 
 def create_wire(position, type="electric_insulated"):  # TODO: wiretypes
-    global active_objects
+    global active_objects, wires_update
+    wires_update = True
     order = detect_item(position)
     if active_objects[order] == "none":
         active_objects[order] = "electric_insulated_wire_connect"

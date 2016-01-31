@@ -5,19 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="566d9fa8-f110-44d0-8fc8-dabbad1abb60" name="Default" comment="lag fix, meatuara movement. Object thread time limiter">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/assets/maps/story.zip" afterPath="$PROJECT_DIR$/assets/maps/story.zip" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/assets/maps/story/1script.py" afterPath="$PROJECT_DIR$/assets/maps/story/1script.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/assets/maps/working_map/1script.py" afterPath="$PROJECT_DIR$/assets/maps/working_map/1script.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/assets/maps/working_map/2.wrm" afterPath="$PROJECT_DIR$/assets/maps/working_map/2.wrm" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/assets/maps/story/2script.py" afterPath="$PROJECT_DIR$/assets/maps/story/2script.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/assets/maps/working_map/2script.py" afterPath="$PROJECT_DIR$/assets/maps/working_map/2script.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/assets/maps/story/3.wrm" afterPath="$PROJECT_DIR$/assets/maps/story/3.wrm" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/assets/maps/story/3script.py" afterPath="$PROJECT_DIR$/assets/maps/story/3script.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/assets/maps/story/4.wrm" afterPath="$PROJECT_DIR$/assets/maps/story/4.wrm" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/graphics.py" afterPath="$PROJECT_DIR$/graphics.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/map_script.py" afterPath="$PROJECT_DIR$/map_script.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/objects.py" afterPath="$PROJECT_DIR$/objects.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/assets/maps/story/wiresconfig" afterPath="$PROJECT_DIR$/assets/maps/story/wiresconfig" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/assets/maps/working_map/wiresconfig" afterPath="$PROJECT_DIR$/assets/maps/working_map/wiresconfig" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="wires.iws" />
@@ -43,7 +34,7 @@
         <entry file="file://$PROJECT_DIR$/objects.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="192" column="46" selection-start-line="192" selection-start-column="46" selection-end-line="192" selection-end-column="46" />
+              <caret line="157" column="41" selection-start-line="157" selection-start-column="41" selection-end-line="157" selection-end-column="41" />
               <folding>
                 <element signature="e#0#20#0" expanded="true" />
               </folding>
@@ -51,11 +42,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="4.wrm" pinned="false" current-in-tab="true">
+      <file leaf-file-name="4.wrm" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/assets/maps/story/4.wrm">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.48863637">
-              <caret line="1968" column="4" selection-start-line="1968" selection-start-column="4" selection-end-line="1968" selection-end-column="4" />
+            <state vertical-scroll-proportion="-2.25">
+              <caret line="1069" column="4" selection-start-line="1069" selection-start-column="4" selection-end-line="1069" selection-end-column="4" />
               <folding />
             </state>
           </provider>
@@ -86,30 +77,18 @@
       <file leaf-file-name="3.wrm" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/assets/maps/story/3.wrm">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-7.0">
-              <caret line="1499" column="12" selection-start-line="1499" selection-start-column="0" selection-end-line="1499" selection-end-column="12" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="1708" column="4" selection-start-line="1708" selection-start-column="4" selection-end-line="1708" selection-end-column="4" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="mapmaker.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/tools/mapmaker.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="57" column="63" selection-start-line="57" selection-start-column="63" selection-end-line="57" selection-end-column="63" />
-              <folding>
-                <element signature="e#464#485#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="graphics.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="graphics.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/graphics.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="294" column="83" selection-start-line="294" selection-start-column="83" selection-end-line="294" selection-end-column="83" />
+            <state vertical-scroll-proportion="0.19642857">
+              <caret line="27" column="61" selection-start-line="27" selection-start-column="61" selection-end-line="27" selection-end-column="61" />
               <folding>
                 <element signature="e#0#20#0" expanded="true" />
               </folding>
@@ -131,7 +110,7 @@
         <entry file="file://$PROJECT_DIR$/assets/maps/story/2script.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="4" column="12" selection-start-line="4" selection-start-column="12" selection-end-line="4" selection-end-column="12" />
+              <caret line="8" column="48" selection-start-line="8" selection-start-column="48" selection-end-line="8" selection-end-column="48" />
               <folding>
                 <element signature="e#0#17#0" expanded="true" />
               </folding>
@@ -175,13 +154,14 @@
         <option value="$PROJECT_DIR$/launch.py" />
         <option value="$PROJECT_DIR$/root.py" />
         <option value="$PROJECT_DIR$/tools/mapmaker.py" />
-        <option value="$PROJECT_DIR$/assets/maps/story/3.wrm" />
         <option value="$PROJECT_DIR$/assets/maps/story/2script.py" />
         <option value="$PROJECT_DIR$/assets/maps/story/1script.py" />
         <option value="$PROJECT_DIR$/assets/maps/story/3script.py" />
         <option value="$PROJECT_DIR$/assets/maps/story/2.wrm" />
-        <option value="$PROJECT_DIR$/graphics.py" />
+        <option value="$PROJECT_DIR$/assets/maps/working_map/1script.py" />
+        <option value="$PROJECT_DIR$/assets/maps/story/3.wrm" />
         <option value="$PROJECT_DIR$/objects.py" />
+        <option value="$PROJECT_DIR$/graphics.py" />
         <option value="$PROJECT_DIR$/assets/maps/story/4.wrm" />
       </list>
     </option>
@@ -190,9 +170,9 @@
     <order />
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="20" />
-    <option name="width" value="1870" />
-    <option name="height" value="1080" />
+    <option name="x" value="18" />
+    <option name="width" value="1874" />
+    <option name="height" value="1082" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -217,7 +197,6 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -293,6 +272,7 @@
         </subPane>
       </pane>
       <pane id="Scope" />
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -545,7 +525,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="20" y="0" width="1870" height="1080" extended-state="6" />
+    <frame x="18" y="0" width="1874" height="1082" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3290735" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -618,13 +598,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/root.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="33" column="19" selection-start-line="33" selection-start-column="19" selection-end-line="33" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/graphics.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -938,9 +911,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="57" column="63" selection-start-line="57" selection-start-column="63" selection-end-line="57" selection-end-column="63" />
-          <folding>
-            <element signature="e#464#485#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -952,30 +922,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/assets/maps/story/2script.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="4" column="12" selection-start-line="4" selection-start-column="12" selection-end-line="4" selection-end-column="12" />
-          <folding>
-            <element signature="e#0#17#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/root.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.21915585">
           <caret line="195" column="25" selection-start-line="195" selection-start-column="25" selection-end-line="195" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/assets/maps/story/3script.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="22" column="67" selection-start-line="22" selection-start-column="67" selection-end-line="22" selection-end-column="67" />
-          <folding>
-            <element signature="e#0#17#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -984,16 +934,6 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="1059" column="10" selection-start-line="1059" selection-start-column="10" selection-end-line="1059" selection-end-column="10" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/graphics.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="294" column="83" selection-start-line="294" selection-start-column="83" selection-end-line="294" selection-end-column="83" />
-          <folding>
-            <element signature="e#0#20#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1007,29 +947,66 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/assets/maps/story/3script.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="22" column="67" selection-start-line="22" selection-start-column="67" selection-end-line="22" selection-end-column="67" />
+          <folding>
+            <element signature="e#0#17#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/assets/maps/working_map/1script.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="7" column="41" selection-start-line="7" selection-start-column="41" selection-end-line="7" selection-end-column="41" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/assets/maps/story/3.wrm">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="1708" column="4" selection-start-line="1708" selection-start-column="4" selection-end-line="1708" selection-end-column="4" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/assets/maps/story/2script.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="8" column="48" selection-start-line="8" selection-start-column="48" selection-end-line="8" selection-end-column="48" />
+          <folding>
+            <element signature="e#0#17#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/objects.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="192" column="46" selection-start-line="192" selection-start-column="46" selection-end-line="192" selection-end-column="46" />
+          <caret line="157" column="41" selection-start-line="157" selection-start-column="41" selection-end-line="157" selection-end-column="41" />
           <folding>
             <element signature="e#0#20#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/assets/maps/story/3.wrm">
+    <entry file="file://$PROJECT_DIR$/assets/maps/story/4.wrm">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-7.0">
-          <caret line="1499" column="12" selection-start-line="1499" selection-start-column="0" selection-end-line="1499" selection-end-column="12" />
+        <state vertical-scroll-proportion="-2.25">
+          <caret line="1069" column="4" selection-start-line="1069" selection-start-column="4" selection-end-line="1069" selection-end-column="4" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/assets/maps/story/4.wrm">
+    <entry file="file://$PROJECT_DIR$/graphics.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.48863637">
-          <caret line="1968" column="4" selection-start-line="1968" selection-start-column="4" selection-end-line="1968" selection-end-column="4" />
-          <folding />
+        <state vertical-scroll-proportion="0.19642857">
+          <caret line="27" column="61" selection-start-line="27" selection-start-column="61" selection-end-line="27" selection-end-column="61" />
+          <folding>
+            <element signature="e#0#20#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
