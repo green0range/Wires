@@ -159,7 +159,7 @@ class Mapmaker:
         terrian_ordered = []
         objects_ordered = []
         for i in range(0, size[0]*size[1]):
-            terrian_ordered.append("stone_floor")
+            terrian_ordered.append("wood_floor")
             objects_ordered.append("none")
         for i in range(0, len(placements)):
             x_order = placements[i][1][0]

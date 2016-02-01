@@ -5,10 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="566d9fa8-f110-44d0-8fc8-dabbad1abb60" name="Default" comment="lag fix, meatuara movement. Object thread time limiter">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/assets/maps/story/3.wrm" afterPath="$PROJECT_DIR$/assets/maps/story/3.wrm" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/assets/maps/story/4.wrm" afterPath="$PROJECT_DIR$/assets/maps/story/4.wrm" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/graphics.py" afterPath="$PROJECT_DIR$/graphics.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/objects.py" afterPath="$PROJECT_DIR$/objects.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/map_script.py" afterPath="$PROJECT_DIR$/map_script.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools/mapmaker.py" afterPath="$PROJECT_DIR$/tools/mapmaker.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="wires.iws" />
@@ -34,7 +32,7 @@
         <entry file="file://$PROJECT_DIR$/objects.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="157" column="41" selection-start-line="157" selection-start-column="41" selection-end-line="157" selection-end-column="41" />
+              <caret line="196" column="65" selection-start-line="196" selection-start-column="65" selection-end-line="196" selection-end-column="65" />
               <folding>
                 <element signature="e#0#20#0" expanded="true" />
               </folding>
@@ -45,7 +43,7 @@
       <file leaf-file-name="4.wrm" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/assets/maps/story/4.wrm">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-2.25">
+            <state vertical-scroll-proportion="0.0">
               <caret line="1069" column="4" selection-start-line="1069" selection-start-column="4" selection-end-line="1069" selection-end-column="4" />
               <folding />
             </state>
@@ -64,16 +62,6 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Error Codes.txt" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Error Codes.txt">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="0" column="7" selection-start-line="0" selection-start-column="1" selection-end-line="0" selection-end-column="7" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="3.wrm" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/assets/maps/story/3.wrm">
           <provider selected="true" editor-type-id="text-editor">
@@ -84,14 +72,34 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="graphics.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="graphics.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/graphics.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.19642857">
-              <caret line="27" column="61" selection-start-line="27" selection-start-column="61" selection-end-line="27" selection-end-column="61" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="338" column="0" selection-start-line="338" selection-start-column="0" selection-end-line="338" selection-end-column="0" />
               <folding>
                 <element signature="e#0#20#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="mapmaker.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/tools/mapmaker.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-10.75">
+              <caret line="156" column="41" selection-start-line="156" selection-start-column="41" selection-end-line="156" selection-end-column="41" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="5.wrm" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/assets/maps/story/5.wrm">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.35714287">
+              <caret line="1437" column="4" selection-start-line="1437" selection-start-column="4" selection-end-line="1437" selection-end-column="4" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -153,16 +161,17 @@
         <option value="$PROJECT_DIR$/map_script.py" />
         <option value="$PROJECT_DIR$/launch.py" />
         <option value="$PROJECT_DIR$/root.py" />
-        <option value="$PROJECT_DIR$/tools/mapmaker.py" />
         <option value="$PROJECT_DIR$/assets/maps/story/2script.py" />
         <option value="$PROJECT_DIR$/assets/maps/story/1script.py" />
         <option value="$PROJECT_DIR$/assets/maps/story/3script.py" />
         <option value="$PROJECT_DIR$/assets/maps/story/2.wrm" />
         <option value="$PROJECT_DIR$/assets/maps/working_map/1script.py" />
         <option value="$PROJECT_DIR$/assets/maps/story/3.wrm" />
-        <option value="$PROJECT_DIR$/objects.py" />
         <option value="$PROJECT_DIR$/graphics.py" />
         <option value="$PROJECT_DIR$/assets/maps/story/4.wrm" />
+        <option value="$PROJECT_DIR$/tools/mapmaker.py" />
+        <option value="$PROJECT_DIR$/objects.py" />
+        <option value="$PROJECT_DIR$/assets/maps/story/5.wrm" />
       </list>
     </option>
   </component>
@@ -170,9 +179,9 @@
     <order />
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="18" />
-    <option name="width" value="1874" />
-    <option name="height" value="1082" />
+    <option name="x" value="20" />
+    <option name="width" value="1870" />
+    <option name="height" value="1080" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -197,6 +206,8 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="Scope" />
+      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -212,6 +223,20 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="wires" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="wires" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="wires" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="tools" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -271,8 +296,6 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
-      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -525,7 +548,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="18" y="0" width="1874" height="1082" extended-state="6" />
+    <frame x="20" y="0" width="1870" height="1080" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3290735" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -545,8 +568,8 @@
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
     <layout-to-restore>
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -565,9 +588,9 @@
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.16224986" sideWeight="0.4936508" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.31590182" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.31590182" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
     </layout-to-restore>
   </component>
   <component name="Vcs.Log.UiProperties">
@@ -598,16 +621,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/graphics.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="177" column="0" selection-start-line="177" selection-start-column="0" selection-end-line="177" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#20#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/objects.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -907,13 +920,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/tools/mapmaker.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="57" column="63" selection-start-line="57" selection-start-column="63" selection-end-line="57" selection-end-column="63" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Error Codes.txt">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -982,31 +988,47 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/objects.py">
+    <entry file="file://$PROJECT_DIR$/assets/maps/story/4.wrm">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="157" column="41" selection-start-line="157" selection-start-column="41" selection-end-line="157" selection-end-column="41" />
-          <folding>
-            <element signature="e#0#20#0" expanded="true" />
-          </folding>
+          <caret line="1069" column="4" selection-start-line="1069" selection-start-column="4" selection-end-line="1069" selection-end-column="4" />
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/assets/maps/story/4.wrm">
+    <entry file="file://$PROJECT_DIR$/tools/mapmaker.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-2.25">
-          <caret line="1069" column="4" selection-start-line="1069" selection-start-column="4" selection-end-line="1069" selection-end-column="4" />
+        <state vertical-scroll-proportion="-10.75">
+          <caret line="156" column="41" selection-start-line="156" selection-start-column="41" selection-end-line="156" selection-end-column="41" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/graphics.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.19642857">
-          <caret line="27" column="61" selection-start-line="27" selection-start-column="61" selection-end-line="27" selection-end-column="61" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="338" column="0" selection-start-line="338" selection-start-column="0" selection-end-line="338" selection-end-column="0" />
           <folding>
             <element signature="e#0#20#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/objects.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="196" column="65" selection-start-line="196" selection-start-column="65" selection-end-line="196" selection-end-column="65" />
+          <folding>
+            <element signature="e#0#20#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/assets/maps/story/5.wrm">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.35714287">
+          <caret line="1437" column="4" selection-start-line="1437" selection-start-column="4" selection-end-line="1437" selection-end-column="4" />
+          <folding />
         </state>
       </provider>
     </entry>
