@@ -228,44 +228,6 @@ class MapImports:
                 self.i +=1
                 if self.i < objects.map_w * objects.map_h:
                     objects.handler_input_all.append((self.x_counter, self.y_counter))
-                """if "wire" in obj_tmp_renderer:
-                    if "electric" in obj_tmp_renderer:
-                        i = objects.get_wire_direction((objects.handler_output_position[0], objects.handler_output_position[1]))
-                        if i == "ns":
-                            self.background_imagery.blit(self.obj_render_images.wire_electric_insulated_ns, (objects.handler_output_position[0], objects.handler_output_position[1]))
-                        elif i == "ew":
-                            self.background_imagery.blit(self.obj_render_images.wire_electric_insulated_ew, (objects.handler_output_position[0], objects.handler_output_position[1]))
-                        elif i == "es":
-                            self.background_imagery.blit(self.obj_render_images.wire_electric_insulated_es, (objects.handler_output_position[0], objects.handler_output_position[1]))
-                        elif i == "ne":
-                            self.background_imagery.blit(self.obj_render_images.wire_electric_insulated_ne, (objects.handler_output_position[0], objects.handler_output_position[1]))
-                        elif i == "nw":
-                            self.background_imagery.blit(self.obj_render_images.wire_electric_insulated_nw, (objects.handler_output_position[0], objects.handler_output_position[1]))
-                        elif i == "sw":
-                            self.background_imagery.blit(self.obj_render_images.wire_electric_insulated_sw, (objects.handler_output_position[0], objects.handler_output_position[1]))
-                elif "door" in obj_tmp_renderer:
-                    if "wood" in obj_tmp_renderer:
-                        if "ns" in obj_tmp_renderer:
-                            self.background_imagery.blit(self.obj_render_images.wood_door_base_ns, (objects.handler_output_position[0], objects.handler_output_position[1]))
-                            if not (objects.handler_output_position[0], objects.handler_output_position[1]) in objects.open_doors:
-                                self.background_imagery.blit(self.obj_render_images.wood_door_ns, (objects.handler_output_position[0], objects.handler_output_position[1]))
-                        elif "ew" in obj_tmp_renderer:
-                            self.background_imagery.blit(self.obj_render_images.wood_door_base_ew, (objects.handler_output_position[0], objects.handler_output_position[1]))
-                            if not (objects.handler_output_position[0], objects.handler_output_position[1]) in objects.open_doors:
-                                self.background_imagery.blit(self.obj_render_images.wood_door_ew, (objects.handler_output_position[0], objects.handler_output_position[1]))
-                elif "wall" in obj_tmp_renderer:
-                    if "wood" in obj_tmp_renderer:
-                        self.background_imagery.blit(self.obj_render_images.wood_wall, (objects.handler_output_position[0], objects.handler_output_position[1]))
-                    elif "marble" in obj_tmp_renderer:
-                        self.background_imagery.blit(self.obj_render_:images.marble_wall, (objects.handler_output_position[0], objects.handler_output_position[1]))
-                elif "power_station" in obj_tmp_renderer:
-                    self.background_imagery.blit(self.obj_render_images.power_station, (objects.handler_output_position[0], objects.handler_output_position[1]))
-                elif "nails" in obj_tmp_renderer:
-                    self.background_imagery.blit(self.obj_render_images.nails, (objects.handler_output_position[0], objects.handler_output_position[1]))
-                elif "meatuara_ns" in obj_tmp_renderer:
-                    tmp = obj_tmp_renderer.split(" ")
-                    self.moving_objects.blit(self.obj_render_images.meatuara_ns, (objects.handler_output_position[0], objects.handler_output_position[1] + int(tmp[3])))
-        """
         self.background_imagery.blit(object_surface, (0,0))
         return self.background_imagery
 
