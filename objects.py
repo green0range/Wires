@@ -295,18 +295,22 @@ class Player:
         if keys[K_w] or keys[K_UP]:
             if self.check_collisions((self.x, self.y-1)):
                 self.y -= 1
+                self.current = "north"
                 sleep(0.001)
         if keys[K_s] or keys[K_DOWN]:
             if self.check_collisions((self.x, self.y+1)):
                 self.y += 1
+                self.current = "south"
                 sleep(0.001)
         if keys[K_a] or keys[K_LEFT]:
             if self.check_collisions((self.x-1, self.y)):
                 self.x -= 1
+                self.current = "east"
                 sleep(0.001)
         if keys[K_d] or keys[K_RIGHT]:
             if self.check_collisions((self.x+1, self.y)):
                 self.x += 1
+                self.current = "west"
                 sleep(0.001)
         if keys[K_e]:
             if "none" in active_objects[detect_item((self.x, self.y))] or "box" in active_objects[detect_item((self.x, self.y))]:

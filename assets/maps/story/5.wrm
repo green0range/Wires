@@ -1939,7 +1939,7 @@ none
 none
 wood_wall
 wood_wall
-marble_wall
+power_station
 wire_electric_ew
 wire_electric_ew
 wire_electric_ew
@@ -2019,4 +2019,4 @@ wood_wall
 wood_wall
 wood_wall
 !SCRIPT:
-1script.py
+2script.py

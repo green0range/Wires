@@ -108,10 +108,10 @@ class Objects:
 
 class PlayerImg:
     def __init__(self):
-        self.north = transform.scale(image.load(path.join("assets", "objects", "player", "north.png")).convert_alpha(), (int(tile_w*0.5), int(tile_h*0.5)))
-        self.east = transform.scale(image.load(path.join("assets", "objects", "player", "east.png")).convert_alpha(), (int(tile_w*0.5), int(tile_h*0.5)))
-        self.south = transform.scale(image.load(path.join("assets", "objects", "player", "south.png")).convert_alpha(), (int(tile_w*0.5), int(tile_h*0.5)))
-        self.west = transform.scale(image.load(path.join("assets", "objects", "player", "west.png")).convert_alpha(), (int(tile_w*0.5), int(tile_h*0.5)))
+        self.north = transform.scale(image.load(path.join("assets", "player", "player_n.png")).convert_alpha(), (int(tile_w*0.8), int(tile_h*0.8)))
+        self.east = transform.scale(image.load(path.join("assets", "player", "player_e.png")).convert_alpha(), (int(tile_w*0.8), int(tile_h*0.8)))
+        self.south = transform.scale(image.load(path.join("assets", "player", "player_s.png")).convert_alpha(), (int(tile_w*0.8), int(tile_h*0.8)))
+        self.west = transform.scale(image.load(path.join("assets", "player", "player_w.png")).convert_alpha(), (int(tile_w*0.8), int(tile_h*0.8)))
     def get_size(self):
         return int(tile_w*0.5), int(tile_h*0.5)
 
