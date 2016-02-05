@@ -132,14 +132,23 @@ class Mapmaker:
         self.btn_wood_wall.pack()
         self.btn_stone_wall = Button(self.root, text="Stone Wall", command=lambda item="stone_wall":self.select(item))
         self.btn_stone_wall.pack()
+        self.ent_custom = Entry(self.root)
+        self.ent_custom.pack()
+        self.btn_stone_wall = Button(self.root, text="Custom", command=lambda item="custom":self.select(item))
+        self.btn_stone_wall.pack()
         self.btn_save = Button(self.root, text="Save", command=self.save)
         self.btn_save.pack()
 
         mainloop()
 
     def select(self, item):
-        print "Selected:", item
-        self.selected = item
+        if item == "custom":
+            item = self.ent_custom.get()
+            self.selected = item
+            print "Selected:", item
+        else:
+            print "Selected:", item
+            self.selected = item
 
     def place(self, event):
         global placements
