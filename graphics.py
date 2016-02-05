@@ -135,6 +135,7 @@ class MapImports:
         self.moving_objects.convert_alpha()
         self.i = 0
         self.i_unlock = True
+        self.init_render = True
     def import_map(self, m=(path.join("assets", "maps", "testmap.wrm")), want_meta=False):
         print "IMPORTING:"
         print m
@@ -217,19 +218,21 @@ class MapImports:
                 self.terrain_counter = -1
                 self.restart = True
             if not self.restart:
-                if self.terrain[self.terrain_counter] == "wood_floor":
-                    self.background_imagery.blit(self.t.wood_floor, (self.x_counter, self.y_counter))
-                elif self.terrain[self.terrain_counter] == "marble_floor":
-                    self.background_imagery.blit(self.t.marble_floor, (self.x_counter, self.y_counter))
-                elif self.terrain[self.terrain_counter] == "stone_floor":
-                    self.background_imagery.blit(self.t.stone_floor, (self.x_counter, self.y_counter))
-                objects.handler_input = ((self.x_counter, self.y_counter), self.terrain_counter)
-                obj_tmp_renderer = objects.handler_output
-                self.i +=1
-                if self.i < objects.map_w * objects.map_h:
-                    objects.handler_input_all.append((self.x_counter, self.y_counter))
+                if self.init_render:
+                    if self.terrain[self.terrain_counter] == "wood_floor":
+                        self.background_imagery.blit(self.t.wood_floor, (self.x_counter, self.y_counter))
+                    elif self.terrain[self.terrain_counter] == "marble_floor":
+                        self.background_imagery.blit(self.t.marble_floor, (self.x_counter, self.y_counter))
+                    elif self.terrain[self.terrain_counter] == "stone_floor":
+                        self.background_imagery.blit(self.t.stone_floor, (self.x_counter, self.y_counter))
+                    #objects.handler_input = ((self.x_counter, self.y_counter), self.terrain_counter)
+                    self.i += 1
+                    if self.i < objects.map_w * objects.map_h:
+                        objects.handler_input_all.append((self.x_counter, self.y_counter))
+                    else:
+                        self.init_render = False
         self.background_imagery.blit(object_surface, (0,0))
-        return self.background_imagery
+        return self.background_imagery, object_surface
 
 firstTimeObjectBlit = True
 

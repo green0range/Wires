@@ -80,9 +80,7 @@ class GameWindow:
     def backgroundrenderloop(self):
         global step
         # Map rendering
-        self.root.blit(self.ma.render(), (0,0))
-
-        #graphics.object_surface
+        self.root.blit(self.ma.render()[0], (0,0))
 
         player_img_dat = self.player.render()
         img = self.select_player_images((player_img_dat[0]))
