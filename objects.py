@@ -140,7 +140,6 @@ class Handler:
                                 tmp.append(solid[i])
                         solid = tmp
             if "meatuara_ns" in active_objects[counter]:
-                #graphics.object_surface.fill((255,0,255))
                 tmp = active_objects[counter].split(" ")
                 tmp[1] = int(tmp[1])
                 tmp[2] = int(tmp[2])
@@ -193,7 +192,7 @@ class Handler:
                         solid.append(((block[0] + int(tmp[1])+3, block[1] + int(tmp[2])), counter))
                         active_objects[counter] = tmp[0] + " " + str(int(tmp[1])+3) + " " + tmp[2]
                         block_wipe_nail((block[0] + int(tmp[1])+3, block[1] + int(tmp[2])))
-                        graphics.object_surface.fill((255,0,255))
+                        graphics.redraw(block[0] + int(tmp[1]), block[1] + int(tmp[2]), block[0] + int(tmp[1])+tile_w, block[1] + int(tmp[2])+tile_h)
                 # left
                 if block[0] + int(tmp[1]) + tile_w -1 <= player_position[0] and block[0] + int(tmp[1]) + tile_w + 1 >= player_position[0]:
                     if block[1] + int(tmp[2]) <= player_position[1] + player_size[1] and block[1] + int(tmp[2]) + tile_h >= player_position[1] + player_size[1]:
@@ -203,7 +202,7 @@ class Handler:
                         solid.append(((block[0] + int(tmp[1])-3, block[1] + int(tmp[2])), counter))
                         active_objects[counter] = tmp[0] + " " + str(int(tmp[1])-3) + " " + tmp[2]
                         block_wipe_nail((block[0] + int(tmp[1])-3, block[1] + int(tmp[2])))
-                        graphics.object_surface.fill((255,0,255))
+                        graphics.redraw(block[0] + int(tmp[1]), block[1] + int(tmp[2]), block[0] + int(tmp[1])+tile_w, block[1] + int(tmp[2])+tile_h)
                 # down
                 if block[0] + int(tmp[1]) <= player_position[0] and block[0] + int(tmp[1]) + tile_w >= player_position[0]:
                     if block[1] + int(tmp[2]) -1 <= player_position[1] + player_size[1] and block[1] + int(tmp[2]) + 1>= player_position[1]:
@@ -213,7 +212,7 @@ class Handler:
                         solid.append(((block[0] + int(tmp[1]), block[1] + int(tmp[2])+3), counter))
                         active_objects[counter] = tmp[0] + " " + tmp[1]+ " " + str(int(tmp[2])+3)
                         block_wipe_nail((block[0] + int(tmp[1]), block[1] + int(tmp[2])+3))
-                        graphics.object_surface.fill((255,0,255))
+                        graphics.redraw(block[0] + int(tmp[1]), block[1] + int(tmp[2]), block[0] + int(tmp[1])+tile_w, block[1] + int(tmp[2])+tile_h)
                     # up
                     if block[1] + int(tmp[2]) + tile_h -1 <= player_position[1] and block[1] + int(tmp[2]) + tile_h + 1>= player_position[1]:
                         for i in range(0, len(solid)):
@@ -222,7 +221,7 @@ class Handler:
                         solid.append(((block[0] + int(tmp[1]), block[1] + int(tmp[2])-3), counter))
                         active_objects[counter] = tmp[0] + " " + tmp[1]+ " " + str(int(tmp[2])-3)
                         block_wipe_nail((block[0] + int(tmp[1]), block[1] + int(tmp[2])-3))
-                        graphics.object_surface.fill((255,0,255))
+                        graphics.redraw(block[0] + int(tmp[1]), block[1] + int(tmp[2]), block[0] + int(tmp[1])+tile_w, block[1] + int(tmp[2])+tile_h)
             if "nails" in active_objects[counter]:
                     if not self.check_collisions(player_position, block):
                         die()
@@ -295,22 +294,22 @@ class Player:
             if self.check_collisions((self.x, self.y-1)):
                 self.y -= 1
                 self.current = "north"
-                sleep(0.00001)
+                sleep(0.001)
         if keys[K_s] or keys[K_DOWN]:
             if self.check_collisions((self.x, self.y+1)):
                 self.y += 1
                 self.current = "south"
-                sleep(0.00001)
+                sleep(0.001)
         if keys[K_a] or keys[K_LEFT]:
             if self.check_collisions((self.x-1, self.y)):
                 self.x -= 1
                 self.current = "east"
-                sleep(0.00001)
+                sleep(0.001)
         if keys[K_d] or keys[K_RIGHT]:
             if self.check_collisions((self.x+1, self.y)):
                 self.x += 1
                 self.current = "west"
-                sleep(0.00001)
+                sleep(0.001)
         if keys[K_e]:
             if "none" in active_objects[detect_item((self.x, self.y))] or "box" in active_objects[detect_item((self.x, self.y))]:
                 if self.items.wires > 0:
@@ -360,9 +359,11 @@ def create_wire(position, type="electric_insulated"):  # TODO: wiretypes
     order = detect_item(position)
     if active_objects[order] == "none":
         active_objects[order] = "electric_insulated_wire_connect"
+        graphics.redraw(position[0], position[1], position[0]+tile_w, position[1]+tile_h)
         return True
     elif "box" in active_objects[order]:
         active_objects[order] += " electric_insulated_wire_connect"
+        graphics.redraw(position[0], position[1], position[0]+tile_w, position[1]+tile_h)
     else:
         return False  # attempted place on other item
 
@@ -371,6 +372,7 @@ def remove_wire(position):
     order = detect_item(position)
     if "wire" in active_objects[order]:
         active_objects[order] = "none"
+        graphics.redraw(position[0], position[1], position[0]+tile_w, position[1]+tile_h)
         return True
     else:
         return False  # not on a wire

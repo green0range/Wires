@@ -119,6 +119,16 @@ object_surface = Surface(screen_size)#((objects.map_w, objects.map_h), SRCALPHA)
 object_surface.set_colorkey((255,0,255))
 object_surface.fill((255,0,255))
 
+object_redraw_request = False
+object_redraw_request_area = (0,0,0,0)
+
+def redraw(x1, y1, x2, y2):
+    print "dgd"
+    global object_redraw_request, object_redraw_request_area
+    object_redraw_request = True
+    object_redraw_request_area = Rect(x1,y1,x2,y2)
+    print "redraw"
+
 # This class imports map files, separates data, and then perpares for rendering. The import_map
 # function must be called once first, and then for every new map. The render function runs off'
 # data prepared in the import_map function, and should be looped after the import is called.
@@ -231,13 +241,15 @@ class MapImports:
                         objects.handler_input_all.append((self.x_counter, self.y_counter))
                     else:
                         self.init_render = False
-        self.background_imagery.blit(object_surface, (0,0))
         return self.background_imagery, object_surface
 
 firstTimeObjectBlit = True
 
 def prepare_object_blit(id, block):
-    global firstTimeObjectBlit, object_surface_done
+    global firstTimeObjectBlit, object_surface_done, object_redraw_request
+    if object_redraw_request:
+        draw.rect(object_surface, Color(255, 0, 255), object_redraw_request_area)
+        object_redraw_request = False
     if firstTimeObjectBlit:
         global obj_render_images
         obj_render_images = Objects()
@@ -297,6 +309,9 @@ def prepare_object_blit(id, block):
             object_surface.blit(obj_render_images.nails, block)
         elif "meatuara_ns" in id:
             tmp = id.split(" ")
+            # redraw request don't work here due to the movement being constant.
+            #draw.rect(object_surface, Color(255, 1, 255), Rect(block[0], block[1]+int(tmp[3]), block[0]+1, block[1]+int(tmp[3])+tile_h))
+            #draw.rect(object_surface, Color(255, 1, 255), Rect(block[0], block[1], block[0]+tile_w, block[1]+tile_h))
             object_surface.blit(obj_render_images.meatuara_ns, (block[0] + int(tmp[2]), block[1] + int(tmp[3])))
         if "box" in id: # The box block can be occupied by more than one object, so it get an if rather than a elif.
             if "wood" in id:

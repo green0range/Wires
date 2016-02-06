@@ -1,11 +1,21 @@
 import pygame
+from os import path
+from time import sleep
+
+HUDs_to_render = []
 
 class Hud:
-    def __init__(self, position, text, style="default"):
-        self.x = position[0]
-        self.y = position[1]
+    def __init__(self, position, text, timeout=0, style="default"):
         self.txt = text
-        self.font_default = pygame.font.Font("Nimbus Mono L", 12)
+        self.colour = (0,0,0)
+        self.font = pygame.font.Font(path.join("assets", "fonts", "ShareTechMono-Regular.ttf"), 25)
+        self.hud = self.font.render(self.txt, 1, self.colour)
+        HUDs_to_render.append((self.hud, position))
+        if timeout > 0:
+            self.timeout(timeout)
 
-    def update(self, new_text):
-        self.txt = new_text
+    def timeout(self, timeout):
+        sleep(timeout)
+        for i in range(0, len(HUDs_to_render)):
+            if self.hud in HUDs_to_render[i]:
+                HUDs_to_render.pop(i)

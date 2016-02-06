@@ -8,6 +8,7 @@ import shutil
 # other py's import
 import graphics
 import objects
+import hud
 from time import sleep
 
 init()
@@ -81,10 +82,23 @@ class GameWindow:
         global step
         # Map rendering
         self.root.blit(self.ma.render()[0], (0,0))
+        self.root.blit(self.ma.render()[1], (0,0))
+        '''if bg_redraw_required:
+            self.root.blit(self.ma.render()[0], (0,0))
+            self.root.blit(self.ma.render()[1], (0,0))
+            bg_redraw_required = False
+        elif obj_redraw_required:
+            self.root.blit(self.ma.render()[1], (0,0))
+            obj_redraw_required = False'''
 
         player_img_dat = self.player.render()
         img = self.select_player_images((player_img_dat[0]))
         self.root.blit(img, player_img_dat[1])
+
+        if len(hud.HUDs_to_render) > 0:
+            for i in range(0, len(hud.HUDs_to_render)):
+                self.root.blit(hud.HUDs_to_render[i][0], hud.HUDs_to_render[i][1])
+
         display.flip()
 
     def objectsloop(self):

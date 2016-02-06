@@ -1849,7 +1849,7 @@ none
 none
 none
 none
-wood_wall
+wood_box 0 0
 none
 none
 none
@@ -2019,4 +2019,4 @@ wood_wall
 wood_wall
 wood_wall
 !SCRIPT:
-2script.py
+5script.py
