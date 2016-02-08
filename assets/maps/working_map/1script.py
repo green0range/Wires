@@ -1,5 +1,5 @@
 import pygame, os
-import objects, root
+import objects, root, hud
 from time import sleep
 
 rootdir = ""
@@ -10,6 +10,8 @@ def init():
     snd_welcome = pygame.mixer.Sound(os.path.join(rootdir, "1.welcome.door_power.ogg"))
     snd_welcome.set_volume(0.25)
     snd_welcome.play()
+    sleep(12)
+    press_e = hud.Hud((objects.map_w * objects.tile_w / 2 - 200,objects.map_h * objects.tile_h / 2),"Press 'e' to place a wire", timeout=5)
     main()
 
 def main():
