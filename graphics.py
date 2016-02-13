@@ -72,7 +72,10 @@ class Objects:
             path.join("assets", "objects", "wires", "wire_electrical_ns.png"),
             path.join("assets", "objects", "wires", "wire_electrical_nw.png"),
             path.join("assets", "objects", "wires", "wire_electrical_sw.png"),
-            path.join("assets", "objects", "black_desk.png")
+            path.join("assets", "objects", "black_desk.png"),
+            path.join("assets", "objects", "chair_s.png"),
+            path.join("assets", "objects", "chair_e.png"),
+            path.join("assets", "objects", "computer_s.png")
         ]
         export_list = []
         for i in range (0, len(import_list)):
@@ -105,6 +108,9 @@ class Objects:
         self.wire_electric_nw = export_list[22]
         self.wire_electric_sw = export_list[23]
         self.desk = export_list[24]
+        self.chair_s = export_list[25]
+        self.chair_e = export_list[26]
+        self.computer_s = export_list[27]
         # Clear export list to save space
         export_list = 0
 
@@ -317,7 +323,15 @@ def prepare_object_blit(id, block):
             #draw.rect(object_surface, Color(255, 1, 255), Rect(block[0], block[1]+int(tmp[3]), block[0]+1, block[1]+int(tmp[3])+tile_h))
             #draw.rect(object_surface, Color(255, 1, 255), Rect(block[0], block[1], block[0]+tile_w, block[1]+tile_h))
             object_surface.blit(obj_render_images.meatuara_ns, (block[0] + int(tmp[2]), block[1] + int(tmp[3])))
+        elif "computer" in id:
+            object_surface.blit(obj_render_images.computer_s, block)
         if "box" in id: # The box block can be occupied by more than one object, so it get an if rather than a elif.
             if "wood" in id:
                 tmp = id.split(" ")
                 object_surface.blit(obj_render_images.wood_box, (block[0] + int(tmp[1]), block[1] + int(tmp[2])))
+            elif "chair" in id:
+                tmp = id.split(" ")
+                if "_e" in id:
+                    object_surface.blit(obj_render_images.chair_e, (block[0] + int(tmp[1]), block[1] + int(tmp[2])))
+                if "_s" in id:
+                    object_surface.blit(obj_render_images.chair_s, (block[0] + int(tmp[1]), block[1] + int(tmp[2])))
