@@ -71,7 +71,8 @@ class Objects:
             path.join("assets", "objects", "wires", "wire_electrical_ne.png"),
             path.join("assets", "objects", "wires", "wire_electrical_ns.png"),
             path.join("assets", "objects", "wires", "wire_electrical_nw.png"),
-            path.join("assets", "objects", "wires", "wire_electrical_sw.png")
+            path.join("assets", "objects", "wires", "wire_electrical_sw.png"),
+            path.join("assets", "objects", "black_desk.png")
         ]
         export_list = []
         for i in range (0, len(import_list)):
@@ -103,6 +104,7 @@ class Objects:
         self.wire_electric_ns = export_list[21]
         self.wire_electric_nw = export_list[22]
         self.wire_electric_sw = export_list[23]
+        self.desk = export_list[24]
         # Clear export list to save space
         export_list = 0
 
@@ -303,6 +305,8 @@ def prepare_object_blit(id, block):
                 object_surface.blit(obj_render_images.marble_wall, block)
             elif "stone" in id:
                 object_surface.blit(obj_render_images.stone_wall, block)
+            elif "desk" in id:
+                object_surface.blit(obj_render_images.desk, block)
         elif "power_station" in id:
             object_surface.blit(obj_render_images.power_station, block)
         elif "nails" in id:
