@@ -131,11 +131,9 @@ object_redraw_request = False
 object_redraw_request_area = (0,0,0,0)
 
 def redraw(x1, y1, x2, y2):
-    print "dgd"
     global object_redraw_request, object_redraw_request_area
     object_redraw_request = True
     object_redraw_request_area = Rect(x1,y1,x2,y2)
-    print "redraw"
 
 # This class imports map files, separates data, and then perpares for rendering. The import_map
 # function must be called once first, and then for every new map. The render function runs off'
@@ -325,6 +323,7 @@ def prepare_object_blit(id, block):
             object_surface.blit(obj_render_images.meatuara_ns, (block[0] + int(tmp[2]), block[1] + int(tmp[3])))
         elif "computer" in id:
             object_surface.blit(obj_render_images.computer_s, block)
+            print "q"
         if "box" in id: # The box block can be occupied by more than one object, so it get an if rather than a elif.
             if "wood" in id:
                 tmp = id.split(" ")

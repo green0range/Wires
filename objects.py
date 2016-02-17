@@ -1,6 +1,6 @@
 from pygame import *
 from time import sleep
-import graphics
+import graphics, hud
 tile_w, tile_h = 0, 0
 map_w, map_h = 0, 0
 
@@ -227,6 +227,11 @@ class Handler:
                         die()
                     if not block in nail_list:
                         nail_list.append((block, counter))
+            if "computer" in active_objects[counter]:
+                if not self.check_collisions(player_position, (block[0], block[1]-1)):
+                    comp_note = hud.Hud((block[0], block[1]-40), "Hold 'e'", timeout=3)
+                    if key.get_pressed()[K_e]:
+                        print "e"
             graphics.prepare_object_blit(active_objects[counter], block)
         first_time = False
 

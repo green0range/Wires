@@ -99,6 +99,9 @@ class GameWindow:
             for i in range(0, len(hud.HUDs_to_render)):
                 self.root.blit(hud.HUDs_to_render[i][0], hud.HUDs_to_render[i][1])
 
+        if hud.comp != 0:
+            self.root.blit(hud.comp)
+
         display.flip()
 
     def objectsloop(self):
