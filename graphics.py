@@ -311,6 +311,8 @@ def prepare_object_blit(id, block):
                 object_surface.blit(obj_render_images.stone_wall, block)
             elif "desk" in id:
                 object_surface.blit(obj_render_images.desk, block)
+            elif "computer" in id:
+                object_surface.blit(obj_render_images.computer_s, block)
         elif "power_station" in id:
             object_surface.blit(obj_render_images.power_station, block)
         elif "nails" in id:
@@ -321,9 +323,6 @@ def prepare_object_blit(id, block):
             #draw.rect(object_surface, Color(255, 1, 255), Rect(block[0], block[1]+int(tmp[3]), block[0]+1, block[1]+int(tmp[3])+tile_h))
             #draw.rect(object_surface, Color(255, 1, 255), Rect(block[0], block[1], block[0]+tile_w, block[1]+tile_h))
             object_surface.blit(obj_render_images.meatuara_ns, (block[0] + int(tmp[2]), block[1] + int(tmp[3])))
-        elif "computer" in id:
-            object_surface.blit(obj_render_images.computer_s, block)
-            print "q"
         if "box" in id: # The box block can be occupied by more than one object, so it get an if rather than a elif.
             if "wood" in id:
                 tmp = id.split(" ")

@@ -100,7 +100,8 @@ class GameWindow:
                 self.root.blit(hud.HUDs_to_render[i][0], hud.HUDs_to_render[i][1])
 
         if hud.comp != 0:
-            self.root.blit(hud.comp)
+            self.root.blit(hud.comp, (0,0))
+            print "blitted hud"
 
         display.flip()
 

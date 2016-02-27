@@ -11,14 +11,14 @@ Full = True
 def story():
     story_path = os.path.join("assets", "maps", "working_map", "1.wrm") # TODO: change back to story after testing
     root.import_pack("/home/william/Documents/Wires/repo/wires/assets/maps/story.zip")
-    root.start(mf=story_path, s=Screen, full=Full)
+    root.start(mf=story_path)#, s=Screen, full=Full)
     w.destroy()
 
 # Open mapo from file system
 def fs():
     initdir = os.path.join("assets", "maps")
     file = tkFileDialog.askopenfilename(initialdir=initdir, filetypes=[('Wires Map', '.wrm'), ('Wires Map Pack (Zipped)', '.zip')])
-    root.start(mf=file, s=Screen, full=Full)
+    root.start(mf=file)#, s=Screen, full=Full)
     w.destroy()
 
 def github():

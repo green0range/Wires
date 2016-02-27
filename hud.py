@@ -30,12 +30,15 @@ class Computer_ui:
         self.font = pygame.font.Font(path.join("assets", "fonts", "ShareTechMono-Regular.ttf"), 25)
         self.run = True
         self.txt = "[USR943@GOVSYS~]$  "
+        self.main()
     def main(self):
         global comp
         for i in range(20, random.randint(21, 100)):
+            sleep(0.5)
             self.txt = "[USR943@GOVSYS~]$  "
             self.hud = self.font.render(self.txt, 1, self.colour)
             self.txt += self.randtxt()
+            print self.txt
             self.cs.blit(self.hud, (0,0))
             comp = self.cs
         comp = 0
