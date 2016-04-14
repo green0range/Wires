@@ -184,7 +184,7 @@ class Handler:
             if "box" in active_objects[counter]:
                 tmp = active_objects[counter].split(" ")
                 # push right
-                if block[0] + int(tmp[1]) - 1 <= player_position[0] + player_size[0] and block[0] + int(tmp[1]) + 1 >= player_position[0] + player_size[0]:
+                if block[0] + int(tmp[1]) - 5 <= player_position[0] + player_size[0] and block[0] + int(tmp[1]) + 5 >= player_position[0] + player_size[0]:
                     if block[1] + int(tmp[2]) <= player_position[1] + player_size[1] and block[1] + int(tmp[2]) + tile_h >= player_position[1] + player_size[1]:
                         for i in range(0, len(solid)):
                             if solid[i] == ((block[0] + int(tmp[1]), block[1] + int(tmp[2])), counter):
@@ -194,7 +194,7 @@ class Handler:
                         block_wipe_nail((block[0] + int(tmp[1])+3, block[1] + int(tmp[2])))
                         graphics.redraw(block[0] + int(tmp[1]), block[1] + int(tmp[2]), block[0] + int(tmp[1])+tile_w, block[1] + int(tmp[2])+tile_h)
                 # left
-                if block[0] + int(tmp[1]) + tile_w -1 <= player_position[0] and block[0] + int(tmp[1]) + tile_w + 1 >= player_position[0]:
+                if block[0] + int(tmp[1]) + tile_w -5 <= player_position[0] and block[0] + int(tmp[1]) + tile_w + 5 >= player_position[0]:
                     if block[1] + int(tmp[2]) <= player_position[1] + player_size[1] and block[1] + int(tmp[2]) + tile_h >= player_position[1] + player_size[1]:
                         for i in range(0, len(solid)):
                             if solid[i] == ((block[0] + int(tmp[1]), block[1] + int(tmp[2])), counter):
@@ -205,7 +205,7 @@ class Handler:
                         graphics.redraw(block[0] + int(tmp[1]), block[1] + int(tmp[2]), block[0] + int(tmp[1])+tile_w, block[1] + int(tmp[2])+tile_h)
                 # down
                 if block[0] + int(tmp[1]) <= player_position[0] and block[0] + int(tmp[1]) + tile_w >= player_position[0]:
-                    if block[1] + int(tmp[2]) -1 <= player_position[1] + player_size[1] and block[1] + int(tmp[2]) + 1>= player_position[1]:
+                    if block[1] + int(tmp[2]) -5 <= player_position[1] + player_size[1] and block[1] + int(tmp[2]) + 5>= player_position[1]:
                         for i in range(0, len(solid)):
                             if solid[i] == ((block[0] + int(tmp[1]), block[1] + int(tmp[2])), counter):
                                 solid.pop(i)
@@ -214,7 +214,7 @@ class Handler:
                         block_wipe_nail((block[0] + int(tmp[1]), block[1] + int(tmp[2])+3))
                         graphics.redraw(block[0] + int(tmp[1]), block[1] + int(tmp[2]), block[0] + int(tmp[1])+tile_w, block[1] + int(tmp[2])+tile_h)
                     # up
-                    if block[1] + int(tmp[2]) + tile_h -1 <= player_position[1] and block[1] + int(tmp[2]) + tile_h + 1>= player_position[1]:
+                    if block[1] + int(tmp[2]) + tile_h -5 <= player_position[1] and block[1] + int(tmp[2]) + tile_h + 5>= player_position[1]:
                         for i in range(0, len(solid)):
                             if solid[i] == ((block[0] + int(tmp[1]), block[1] + int(tmp[2])), counter):
                                 solid.pop(i)
@@ -273,6 +273,8 @@ class Player:
         i = 0
         self.current = "north"
         self.items = player_items_crosslevel
+        self.collision_check_limiter = 0
+        self.collision_check_oldstate = True
     def check_collisions(self, pos):
         '''try:
             x = int(pos[0]/tile_w) * tile_w
@@ -286,35 +288,42 @@ class Player:
         for i in range(0, len(solid)):
             if solid[i][1] == j:
                 print solid'''
-        tmp = True
-        for i in range(0, len(solid)):
-            try:
-                if (pos[1] + self.width) > solid[i][0][1] and pos[1] < (solid[i][0][1] + tile_h):
-                    if (pos[0] + self.height) > solid[i][0][0] and pos[0] < (solid[i][0][0] + tile_w):
-                        tmp = False
-            except IndexError:
-                print "Index error in movement solid checker. Did another thread remove a solid?"
+        tmp = self.collision_check_oldstate
+        print len(solid)
+        # This means it only checks every 5 keypresses
+        self.collision_check_limiter +=1
+        if self.collision_check_limiter > 4:
+            tmp = True
+            for i in range(0, len(solid)):
+                try:
+                    if (pos[1] + self.width) > solid[i][0][1] and pos[1] < (solid[i][0][1] + tile_h):
+                        if (pos[0] + self.height) > solid[i][0][0] and pos[0] < (solid[i][0][0] + tile_w):
+                            tmp = False
+                except IndexError:
+                    print "Index error in movement solid checker. Did another thread remove a solid?"
+            self.collision_check_limiter = 0
+            self.collision_check_oldstate = tmp
         return tmp
     def move(self, keys):
         global solid, tile_w, tile_h, request, response, player_position
         cant_move = False
         if keys[K_w] or keys[K_UP]:
-            if self.check_collisions((self.x, self.y-1)):
+            if self.check_collisions((self.x, self.y-5)):
                 self.y -= 1
                 self.current = "north"
                 sleep(0.001)
         if keys[K_s] or keys[K_DOWN]:
-            if self.check_collisions((self.x, self.y+1)):
+            if self.check_collisions((self.x, self.y+5)):
                 self.y += 1
                 self.current = "south"
                 sleep(0.001)
         if keys[K_a] or keys[K_LEFT]:
-            if self.check_collisions((self.x-1, self.y)):
+            if self.check_collisions((self.x-5, self.y)):
                 self.x -= 1
                 self.current = "east"
                 sleep(0.001)
         if keys[K_d] or keys[K_RIGHT]:
-            if self.check_collisions((self.x+1, self.y)):
+            if self.check_collisions((self.x+5, self.y)):
                 self.x += 1
                 self.current = "west"
                 sleep(0.001)
