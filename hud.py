@@ -27,20 +27,22 @@ class Computer_ui:
     def __init__(self):
         self.cs = pygame.Surface((400,400))
         self.colour = (249,249,249)
-        self.font = pygame.font.Font(path.join("assets", "fonts", "ShareTechMono-Regular.ttf"), 25)
+        self.font = pygame.font.Font(path.join("assets", "fonts", "ShareTechMono-Regular.ttf"), 14)
         self.run = True
         self.txt = "[USR943@GOVSYS~]$  "
         self.main()
     def main(self):
         global comp
-        for i in range(20, random.randint(21, 100)):
-            sleep(0.5)
-            self.txt = "[USR943@GOVSYS~]$  "
-            self.hud = self.font.render(self.txt, 1, self.colour)
-            self.txt += self.randtxt()
-            print self.txt
+        self.ftxt = "[USR943@GOVSYS~]$ sudo door -o id=8"
+        for i in range(1, random.randint(1, 15)):
+            sleep(0.1)
+            self.hud = self.font.render(self.ftxt, 1, self.colour)
             self.cs.blit(self.hud, (0,0))
+            self.hud = self.font.render(self.txt, 1, self.colour)
+            self.cs.blit(self.hud, (0,15))
+            self.txt = self.randtxt()
             comp = self.cs
+            # TODO: stop bliting over top of other blits
         comp = 0
     def randtxt(self):
         letters = [
@@ -71,7 +73,7 @@ class Computer_ui:
             "n",
             "m"
         ]
-        word = ""
+        word = "[sudo] Password for USR943: "
         for i in range(1, random.randint(1, 12)):
             word += letters[random.randint(0, 25)]
         return word
