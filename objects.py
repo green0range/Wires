@@ -289,7 +289,6 @@ class Player:
             if solid[i][1] == j:
                 print solid'''
         tmp = self.collision_check_oldstate
-        print len(solid)
         # This means it only checks every 5 keypresses
         self.collision_check_limiter +=1
         if self.collision_check_limiter > 4:

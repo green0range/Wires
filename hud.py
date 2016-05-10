@@ -6,6 +6,12 @@ import random
 HUDs_to_render = []
 comp = 0
 
+# These should be changed dynamically from level scripts.
+command1 = ""
+command1_response = ""
+
+tmp = 0
+
 class Hud:
     def __init__(self, position, text, timeout=0, style="default"):
         self.txt = text
@@ -23,7 +29,7 @@ class Hud:
                 HUDs_to_render.pop(i)
 
 class Computer_ui:
-    global comp
+    global comp, tmp
     def __init__(self):
         self.cs = pygame.Surface((400,400))
         self.colour = (249,249,249)
@@ -31,19 +37,33 @@ class Computer_ui:
         self.run = True
         self.txt = "[USR943@GOVSYS~]$  "
         self.main()
+    def text_blit_with_spaces(self, text, colour):
+        textarray = text.split("\n")
+        textsurface = pygame.Surface((400,100))
+        for i in range(0, len(textarray)):
+            textsurface.blit(self.font.render(textarray[i], 1, colour), (0, i*15))
+        return textsurface
     def main(self):
-        global comp
-        self.ftxt = "[USR943@GOVSYS~]$ sudo door -o id=8"
-        for i in range(1, random.randint(1, 15)):
-            sleep(0.1)
-            self.hud = self.font.render(self.ftxt, 1, self.colour)
-            self.cs.blit(self.hud, (0,0))
-            self.hud = self.font.render(self.txt, 1, self.colour)
-            self.cs.blit(self.hud, (0,15))
-            self.txt = self.randtxt()
-            comp = self.cs
-            # TODO: stop bliting over top of other blits
-        comp = 0
+        global comp, tmp
+        self.ftxt = "[USR943@GOVSYS~]$ " + command1
+        # Do command1
+        if "sudo" in command1:
+            for i in range(1, random.randint(1, 15)):
+                sleep(0.1)
+                self.hud = self.font.render(self.ftxt, 1, self.colour)
+                self.cs.blit(self.hud, (0,0))
+                self.hud = self.font.render(self.txt, 1, self.colour)
+                self.cs.blit(self.hud, (0,15))
+                self.txt = self.randtxt()
+                comp = self.cs
+                # TODO: stop bliting over top of other blits
+        self.hud = self.text_blit_with_spaces(command1_response, self.colour)
+        self.cs.blit(self.hud, (0,30))
+        comp = self.cs
+        while tmp < 100000:
+            tmp +=1
+        else:
+            comp = 0
     def randtxt(self):
         letters = [
             "q",
