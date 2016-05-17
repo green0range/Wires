@@ -117,9 +117,14 @@ class Objects:
 class PlayerImg:
     def __init__(self):
         self.north = transform.scale(image.load(path.join("assets", "player", "player_n.png")).convert_alpha(), (int(tile_w*0.8), int(tile_h*0.8)))
+        self.northeast = transform.scale(image.load(path.join("assets", "player", "player_ne.png")).convert_alpha(), (int(tile_w*0.8), int(tile_h*0.8)))
+        self.northwest = transform.scale(image.load(path.join("assets", "player", "player_nw.png")).convert_alpha(), (int(tile_w*0.8), int(tile_h*0.8)))
         self.east = transform.scale(image.load(path.join("assets", "player", "player_e.png")).convert_alpha(), (int(tile_w*0.8), int(tile_h*0.8)))
         self.south = transform.scale(image.load(path.join("assets", "player", "player_s.png")).convert_alpha(), (int(tile_w*0.8), int(tile_h*0.8)))
         self.west = transform.scale(image.load(path.join("assets", "player", "player_w.png")).convert_alpha(), (int(tile_w*0.8), int(tile_h*0.8)))
+        # Currently, (17may2016) images are reflective. This may need to be changed.
+        self.southwest = self.northeast
+        self.southeast = self.northwest
     def get_size(self):
         return int(tile_w*0.5), int(tile_h*0.5)
 

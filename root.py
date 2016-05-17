@@ -50,14 +50,23 @@ class GameWindow:
         if obj_id == "wood_wall":
             return self.object_images.wood_wall
     def select_player_images(self, obj_id):
-        if obj_id == "north":
+        if obj_id == "n":
             return self.player_images.north
-        if obj_id == "east":
+        elif obj_id == "e":
             return self.player_images.east
-        if obj_id == "south":
+        elif obj_id == "s":
             return self.player_images.south
-        if obj_id == "west":
+        elif obj_id == "w":
             return self.player_images.west
+        elif obj_id == "nw":
+            return self.player_images.northwest
+        elif obj_id == "ne":
+            return self.player_images.northeast
+        elif obj_id == "sw":
+            return self.player_images.southwest
+        elif obj_id == "se":
+            return self.player_images.southeast
+        else: return self.player_images.north # Default
 
     def mainloop(self):
         global stop

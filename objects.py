@@ -271,7 +271,7 @@ class Player:
         self.height = i.get_size()[1]
         player_size = (self.width, self.height)
         i = 0
-        self.current = "north"
+        self.current = "n"
         self.items = player_items_crosslevel
         self.collision_check_limiter = 0
         self.collision_check_oldstate = True
@@ -303,28 +303,59 @@ class Player:
             self.collision_check_limiter = 0
             self.collision_check_oldstate = tmp
         return tmp
+    def change_face_direction(self, going):
+        # This stops constant flickering when dianginal, by detecting the pre direction before changing.
+        if going == "n":
+            if self.current == "e":
+                return "ne"
+            elif self.current == "w":
+                return "nw"
+            else:
+                return "n"
+        elif going == "s":
+            if self.current == "e":
+                return "se"
+            elif self.current == "w":
+                return "sw"
+            else:
+                return "s"
+        elif going == "e":
+            if self.current == "n":
+                return "ne"
+            elif self.current == "s":
+                return "se"
+            else:
+                return "e"
+        elif going == "w":
+            if self.current == "n":
+                return "nw"
+            elif self.current == "s":
+                return "sw"
+            else:
+                return "e"
+
     def move(self, keys):
         global solid, tile_w, tile_h, request, response, player_position
         cant_move = False
         if keys[K_w] or keys[K_UP]:
             if self.check_collisions((self.x, self.y-5)):
                 self.y -= 1
-                self.current = "north"
+                self.current = self.change_face_direction("n")
                 sleep(0.001)
         if keys[K_s] or keys[K_DOWN]:
             if self.check_collisions((self.x, self.y+5)):
                 self.y += 1
-                self.current = "south"
+                self.current = self.change_face_direction("s")
                 sleep(0.001)
         if keys[K_a] or keys[K_LEFT]:
             if self.check_collisions((self.x-5, self.y)):
                 self.x -= 1
-                self.current = "east"
+                self.current = self.change_face_direction("w")
                 sleep(0.001)
         if keys[K_d] or keys[K_RIGHT]:
             if self.check_collisions((self.x+5, self.y)):
                 self.x += 1
-                self.current = "west"
+                self.current = self.change_face_direction("e")
                 sleep(0.001)
         if keys[K_e]:
             if "none" in active_objects[detect_item((self.x, self.y))] or "box" in active_objects[detect_item((self.x, self.y))]:
